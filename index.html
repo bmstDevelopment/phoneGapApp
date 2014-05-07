@@ -1,0 +1,1579 @@
+
+<!DOCTYPE html>
+<!--HTML5 doctype-->
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        
+        <link href="css/icons.css" rel="stylesheet" type="text/css"/>
+        <link href="css/af.ui.css" rel="stylesheet" type="text/css"/>
+        <link href="css/app.css" rel="stylesheet" type="text/css"/>
+        <link href="css/font-awesome.css" rel="stylesheet" type="text/css"/>
+
+        <style> 
+            #afui .panel {
+             
+                padding:0px;
+                padding-top:0px;
+            } 
+            
+            {
+                font-size : 8px;
+            }
+            .spanPadding {
+                margin: 2% 2%;
+                padding: 11px 8px;
+            }
+        </style>
+    
+       <phonegap></phonegap>
+       <!-- appframework 的两个js都修改过 替换请慎重 -->
+        <script type="text/javascript" charset="utf-8" src="js/appframework.min.js"></script>
+
+
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.actionsheet.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.css3animate.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.passwordBox.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.scroller.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.selectBox.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.touchEvents.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.touchLayer.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.popup.js"></script>
+
+        <script type="text/javascript" charset="utf-8" src="js/appframework.ui.min.js"></script>
+
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/fade.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/flip.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/pop.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/slide.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideDown.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideUp.js"></script>
+        <!--<script type="text/javascript" charset="utf-8" src="./plugins/af.slidemenu.js"></script> -->
+
+        <script type="text/javascript" charset="utf-8" src="js/appframework.init.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="js/utils.js"></script>
+        <script type="text/javascript" charset="utf-8">
+           
+        </script>
+    </head>
+    <body>
+        <div id="afui" class='af'>
+            <span id="uuid" style="display:none;">无</span>
+            <!-- -------------- start 顶部工具栏 -------------- -->
+            <div id="header">
+                 <a id="menubadge" onClick="af.ui.toggleSideMenu()" class="menuButton" style="float: right; "></a>
+            </div>
+            <header id="indexHeader">
+                <h1>首页</h1>
+            </header>
+            <!-- -------------- end 顶部工具栏 ------------------ -->
+            <!-- -------------- start 主体 -------------- -->
+            <div id="content" style="" >
+                <!-- start 首页 -->
+                <div  style="" id="main" class="panel appground" title="首页" selected="true" data-footer="none" data-header="indexHeader">
+                    <img class="" alt="中国东莞移动" style="widht:100%;height:30%;" src="icon/title-header.jpg" title=""/>
+                   
+                    <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
+                        <input type="text" id="username" style="float:left;" placeholder="用户名" value="admin"/>
+                    </div>
+                    <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
+                        <input type="password" id="password" style="float:left;" placeholder="密码" value="111111"/>
+                    </div>
+                    <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
+                        <input type="text" id="login_ip" style="float:left;" placeholder="IP" value="192.168.1.172"/>
+                    </div>
+                    <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">     
+                       <!--  <a href="index.html?ios7" data-ignore="true">ios7<a>   -->            
+                        <a href="javascript:void(0);" id="btn_login" class="button" style="width:100%;height:45px;background-color:#0088D1;color:white;font-size:20px;" >登录</a>
+                    </div>
+                    <div class="checkbox_element" style="width:100%;overflow:hidden;">
+                        <input id="remind_password" type="checkbox" value="on" name="remind_password"/>
+                        <label for="remind_password" style="float:left;margin-left:20%;width:30%;" class="" >记住密码</label>
+                        <!--<label style="float:right;overflow:hidden;width:30%;margin-right:10%;"><a href="#">忘记密码？</a></label>-->
+                    </div>  
+                </div>
+                <script type="text/javascript" charset="utf-8">
+
+                    var page_main = {};
+                        page_main.$btn_login = $('#btn_login');
+                        page_main.$login_ip = $('#login_ip');
+                        page_main.$username = $('#username');
+                        page_main.$password = $('#password');
+
+                        page_main.$btn_login.click(function(){
+                             //修改ip地址
+                            var ip = page_main.$login_ip.val();
+                            utils.data.mainUrl = 'http://'+ip+':8080/ips_v4/webservice/rest/';
+
+                            utils.data.resourceManagerUrl = utils.data.mainUrl + 'RESTResrouceService/';
+                            utils.data.workorderUrl =  utils.data.mainUrl + 'RESTWorkOrder/';
+
+                            var loginUrl = utils.data.mainUrl + 'Login/loginIn';
+                            var param = 'username='+page_main.$username.val()+'&password='+page_main.$password.val();
+                            var loging_success = 'success';
+                            $.ui.showMask('登录中');
+                            if (myPhoneGapApi.utils.getConnection()) {
+                                utils.wsJsonPUUID(loginUrl,param,function(result){
+
+                                    $.ui.hideMask();
+                                    if (result.state == loging_success) {//登陆成功
+                                        dbDataBase.setUUID(result.message);
+                                        page_main.utils.loginHandle();
+
+                                        page_workorder.fn.callWorkOrder();
+                                    } else {
+                                        alert(result.message);
+                                    }
+                                });
+                            } else {
+                                page_main.utils.loginHandle();
+                                alert('网络异常，使用离线模式（只提供资源的查询）。');
+                                page_resource.fn.callResource();
+                                $.ui.hideMask();
+                            }
+                            dbDataBase.myDeviceReadyListenerOnLine();//加载数据库
+                        });
+                        page_main.utils = {};
+                        page_main.utils.loginHandle = function () {
+                            //登陆侧边栏可以出现
+                            var script = document.createElement("script");
+                            script.src = "./plugins/af.slidemenu.js";
+                            var tag = $("head").append(script);
+                           
+                        }
+                </script>
+                <!-- -------------- end 首页 -------------- -->
+               
+                <!-- -------------- start 我的工单 -------------- -->
+                <div id="my_workorder" class="panel appground" data-nav="nav_mySide" title="我的工单">
+                    <div id="workorder_search">
+                        <div class="input_element from_element" style="float:left;width:50%;overflow:hidden;padding:2% 2% 0% 2%;">
+                            <input type="text" id="workorder_search_address" placeholder="输入地址"/>
+                        </div>
+                        <div class="input_element from_element" style="float:left;width:30%;overflow:hidden;padding:2% 2% 0% 2%;">
+                            <select id="workorder_search_type">
+                                <!-- <option value="0">待领取</option>
+                                <option value="1">施工中</option>
+                                <option value="2">异常</option>
+                                <option value="3">完成</option> -->
+                                <!-- <option value="100">等待审批</option> -->
+                                <option value="400">等待施工</option>
+                                <!-- <option value="300">等待指派施工人员</option> -->
+                                <option value="401">施工中</option>
+                                <!-- <option value="500">等待结单审核</option> -->
+                                <option value="600">完成</option>
+                                <!-- <option value="700">已取消工单</option>
+                                <option value="999999">异常工单</option> -->
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                        <div class="input_element from_element" style="float:left;width:20%;overflow:hidden;padding:1% 2% 0% 2%;">
+                            <a id="btn_query_order" href="javascript:void(0);" onClick="" class="button fa fa-search fa-lg" style="pading:12px 12px;"></a>
+                        </div>
+                    </div>
+                    <div>&nbsp;</div>
+                        <ul class="list inset"  id="workorder_temp" style="display:none;">
+                            <li name="popOrderSelect">
+                                <a href="javascript:void(0);" id="$id">地址：$FullAddress</a>
+                                <span id="version" style="display:none;">$version</span>
+                                <span id="status" style="display:none;">$status</span>
+                                <span>小区：$addressLevel4</span>
+                                <br/>
+                                <span class="">状态：$word</span>
+                                <br/>
+                                <span class="">联系人名称：$contactsName</span>
+                                <br/>
+                                <span class="">申请日期：$applicationDate</span>
+                            </li>
+                        </ul>
+                        <span id="order_pageNum" style="display:none;">1</span>
+                        <ul class="list inset"  id="workorder_list" style="">
+                           <!-- <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋406号</span></a>
+                                <a class="icon busy" href="#">待领取</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋405号</span></a>
+                                <a class="icon pin" style="overflow:hidden;" href="#">施工中</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋404号</span></a>
+                                <a class="icon warning" style="overflow:hidden;" href="#">异常</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋403号</span></a>
+                                <a class="icon check" style="overflow:hidden;" href="#">完成</a>
+                            </li>-->
+                        </ul>
+                        <div class="input_element from_element" style="width:100%;position:relative;padding:2% 2% 2% 2%;">     
+                            <a href="javascript:void(0);" id="btn_add_owrkorder" class="button bottom load" style="width:100%;height:30px;font-size:13px;" >加载数据</a>
+                            <a href="javascript:void(0);" id="btn_last" class="button bottom last" style="width:100%;height:30px;font-size:13px;display:none;" >最后一页了</a>
+                            <a href="javascript:void(0);" id="btn_res_noData" class="button bottom noData" style="width:100%;height:30px;font-size:13px;display:none;" >无数据</a>
+                        </div>
+                        <script type="text/javascript" charset="utf-8">
+                                var page_workorder = {};
+                                    page_workorder.$btn_add = $('#btn_add_owrkorder');
+                                    page_workorder.$btn_login = $('#btn_login');
+                                    page_workorder.$workorder_temp = $('#workorder_temp');
+                                    page_workorder.$workorder_list = $('#workorder_list');
+                                    page_workorder.$workorder_search_type = $('#workorder_search_type');
+                                    page_workorder.$workorder_search_address = $('#workorder_search_address');
+                                    page_workorder.$btn_query_order = $('#btn_query_order');
+                                    page_workorder.$page_workorder = $('#page_workorder');
+                                    page_workorder.$pageNum = $('#order_pageNum');
+
+
+                                var $doc = $doc || $(document);
+                                $doc.delegate("[name='popOrderSelect']","click",function(){
+                                       var $this = $(this);
+                                       var $id = $this.find('a').attr('id');
+                                       var $status = $this.find('#status').html();
+                                       var $version = $this.find('#version').html();
+                                       page_workorder.fn.showOrderSheet($id,$version,$status);
+                                });
+                                 //查询
+                                page_workorder.$btn_query_order.click(function(){
+                                    page_workorder.fn.callWorkOrder();
+                                });
+                                //加载新数据
+                                page_workorder.$btn_add.click(function(){
+                                    var oldPageNum = page_workorder.$pageNum.html();
+                                    var newPageNum = page_workorder.$pageNum.html(parseInt(oldPageNum)+1);
+                                    page_workorder.fn.addData('add');
+                                });
+                                page_workorder.fn = {};
+                                page_workorder.fn.callWorkOrder = function () {
+                                    $.ui.loadContent("#my_workorder",false,false,"slide");
+                                    $('#navbar_manager').removeClass('pressed');
+                                    $('#navbar_workorder').addClass('pressed');
+                                    page_workorder.fn.addData();
+
+                                };
+                                page_workorder.fn.addData = function (operator) {
+                                    if (operator!='add') {
+                                        page_workorder.$pageNum.html('1');
+                                    }
+                                    var url = utils.data.workorderUrl+'getPrivateWorkorder';
+                                    var param = 'address='+page_workorder.$workorder_search_address.val()+'&status='+page_workorder.$workorder_search_type.val()+'&pageSize=10&pageNum='+page_workorder.$pageNum.html();
+                                    
+                                    //调用ws的jsonp模式 get方式
+                                    /* utils.wsJsonPUUID(url,param,function(result){
+                                         var data = result.items;
+                                         page_workorder.fn.setWorkOrderData(page_workorder.$workorder_temp, page_workorder.$workorder_list,data);
+                                    });*/
+                                    //静态数据
+                                   /* var data = [
+                                            {
+                                                address:'广州天河区五山路五山小区a栋404号',id:'1',applicationDat:'',status:'200',contactsName:'测试'
+                                            },
+                                            {
+                                                address:'广州天河区五山路五山小区a栋405号',id:'21',applicationDat:'',status:'200',contactsName:'测试'
+                                            },
+                                            {
+                                                address:'广州天河区五山路五山小区a栋406号',id:'1121',applicationDat:'',status:'200',contactsName:'测试'
+                                            }
+                                    ];*/
+                                    $.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                        page_workorder.fn.setWorkOrderData(page_workorder.$workorder_temp, page_workorder.$workorder_list,result,operator);
+                                    }); 
+                                };
+                                //领取工单
+                                page_workorder.fn.receiveWorkorder = function (id,version) {
+                                    var url = utils.data.workorderUrl+'receiveWorkorder';
+                                    var param = 'workorderId='+id+'&workorderVersion='+version;
+                                    $.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                        alert(result.message);
+                                        page_workorder.fn.callWorkOrder();
+                                    }); 
+                                };
+                                page_workorder.fn.setWorkOrderData = function (tempObj, listObj, data, operator) {
+                                   /* var mapState = {
+                                        '100' :   'busy',
+                                        '401':    '',
+                                        '999999':    'warning',
+                                        '600':    'check'
+                                    };*/
+                                    var mapStateWord ={
+                                        '100' :'等待审批',
+                                        '200' :'等待分配资源',
+                                        '300' :'等待指派施工人员',
+                                        '400' :'等待施工',
+                                        '401' :'施工中',
+                                        '500' :'等待结单审核',
+                                        '600' :'完成',
+                                        '700' :'已取消工单',
+                                        '999999' : '异常工单'
+                                    }
+                                    function addItems(val, _operator) {
+                                        var html = "";
+                                        $.each(val.items,function(i,item){
+                                                var temp = "";
+                                                temp = tempObj.html()
+                                                .replace(/\$id/g,item.id)
+                                                .replace(/\$FullAddress/g,item.address)
+                                                .replace(/\$version/g,item.version)
+                                                .replace(/\$status/g,item.status)
+                                                .replace(/\$addressLevel4/g,item.addressLevel4)
+                                                .replace(/\$applicationDate/g,utils.formatDate(item.applicationDate,'yyyy-MM-dd'))
+                                                .replace(/\$contactsName/g,item.contactsName)
+                                                .replace(/\$word/g,mapStateWord[item.status]);
+                                                
+                                                html += temp;
+                                        });
+                                        if (_operator == 'add') {
+                                            listObj.append(html);
+                                        } else {
+                                            listObj.html(html);
+                                        }
+
+
+                                        if (val.PStart == val.PTotal) {
+                                            $('.bottom').hide();
+                                            $('.last').show();
+                                        } else if (val.PTotal == 0) {//无数据时
+                                            $('.bottom').hide();
+                                            $('.noData').show();
+                                        } else {
+                                            $('.bottom').hide();
+                                            $('.load').show();
+                                        }
+                                        
+                                    }
+                                    addItems(data,operator);
+                                };
+                                //底层弹出框
+                                page_workorder.fn.showOrderSheet = function(valId,version,status) {
+                                    if (status != "400") {
+                                        $("#afui").actionsheet([
+                                            {                           
+                                                text: '查看工单',  
+                                                cssClasses: 'queryWorkOrder',          
+                                                handler: function () {  
+                                                   workorder_info.fn.callWorkOrderMsg(valId);
+                                                }                        
+                                            }
+                                        ]);       
+                                    }  else {
+                                        $("#afui").actionsheet([
+                                            {                                
+                                                text: '领取工单',                    
+                                                cssClasses: 'doWorkOrder',   
+                                                handler: function () {             
+                                                   page_workorder.fn.receiveWorkorder(valId,version);         
+                                                }                           
+                                            }, 
+                                            {                           
+                                                text: '查看工单',  
+                                                cssClasses: 'queryWorkOrder',          
+                                                handler: function () {  
+                                                   workorder_info.fn.callWorkOrderMsg(valId);
+                                                }                        
+                                            }
+                                        ]);                    
+                                    } 
+                                                 
+                                }  
+                        </script>
+                </div>
+                <!--  -------------- end 我的工单 --------------  -->
+                <!--  -------------- start 工单信息 --------------  -->
+                <div id="workorder_msg" class="panel appground"  data-nav="nav_mySide" title="工单信息" data-footer="none">
+
+                    <div id="msg_list">
+                       
+                    </div>
+                    <div id="msg_temp" style="display:none;">
+                         <ul class="list">
+                            <li>
+                                <!-- <label for="msg_address" style="width:20%;"></label> -->
+                                <span id="msg_id" style="display:none;">$id</span>
+                                <span id="msg_version" style="display:none;">$version</span>
+                                <span id="odf2_id" style="display:none;">$odf2_id</span>
+                                <span id="ter_id" style="display:none;">$ter_id</span>
+                                <span id="msg_address" style="width:100%;" class="">地址：$address</span>
+                            </li>
+                            <li> 
+                                <label for="odf2_validata" style="width:20%;" class="" >ODF2端口：</label>
+                               
+                                <div>
+                                    <a class="button red" id="odf2_validata" style="margin-left:20%;">点击验证条形码</a>
+                                </div>
+                            </li>
+                         
+                            <li>
+                                <label for="ter_validate" style="width:20%;" class="" >客户皮线光纤端口：</label>
+                                 <div>
+                                  <a class="button red" id="ter_validate" style="margin-left:20%;">点击验证条形码</a>
+                                </div>
+                            </li>
+                           
+                            <li>
+                               <!--  <label for="contactsName" style="width:20%;" class="" >联系人:</label> -->
+                                <span id="contactsName" style="width:65%;" >联系人：$contactsName</span>
+                            </li>
+                            <li>
+                                <!-- <label for="contactPhone" style="width:20%;" class="" >联系人电话:</label> -->
+                                <span id="contactPhone" style="width:65%;" >联系人电话：$contactPhone</span>
+                            </li>
+                            <li>
+                                <!-- <label for="applicationDate" style="width:20%;" class="" >申请时间:</label> -->
+                                <span id="applicationDate" style="width:65%;" >申请时间：$applicationDate</span>
+                            </li>
+                            <li>
+                                <!-- <label for="importType" style="width:20%;" class="" >工单来源:</label> -->
+                                <span id="importType" style="width:65%;">工单来源：$importType</span>
+                            </li>
+                            <li>
+                                <!-- <label for="importer" style="width:20%;" class="" >工单来源者:</label> -->
+                                <span id="importer" style="width:65%;" >工单来源者：$importer</span>
+                            </li>
+                           <!--  <li>
+                                <label for="imporeterid" style="width:20%;" class="" >工单来源者id:</label>
+                                <span id="imporeterid" style="width:65%;" type="text" value=：$imporeterid"></span>
+                            </li> -->
+                            <li>
+                                <!-- <label for="importTime" style="width:20%;" class="" >工单来源输入时间:</label> -->
+                                <span id="importTime" style="width:65%;" >工单来源输入时间：$importTime</span>
+                            </li>
+                            <li>
+                                <!-- <label for="status" style="width:20%;" class="" >工单状态:</label> -->
+                                <span id="status" style="width:65%;" >工单状态：$status</span>
+                            </li>
+                           
+                            <li>
+                                <!-- <label for="operators" style="width:20%;" class="" >来源:</label> -->
+                                <span id="operators" style="width:65%;" >来源：$operators</span>
+                            </li>
+                            <li>
+                                <label for="isError" style="width:20%;" class="" >是否出现异常：</label>
+                                <select id="isError"  style="widht:50%;height:20%;" >
+                                     <option value="pass">是</option>
+                                     <option value="reject">否</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label for="reason" style="width:20%;" class="" >填写异常原因：</label>
+                                <textarea id="reason" style="widht:50%;height:40%;" class=""></textarea>
+                            </li>
+                            <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
+                                <a id="btn_endOrder" name="btn_endOrder" class="button" href="javascript:void(0);" style="width:100%;height:45px;background-color:#0088D1;color:white;font-size:20px;">结单</a>
+                            </div>
+                        </ul>
+                    </div>
+                    <script type="text/javascript">
+                                var workorder_info = {};
+                                    workorder_info.$btn_endOrder = $('#btn_endOrder');
+                                    workorder_info.$msg_list = $('#msg_list');
+                                    workorder_info.$msg_temp = $('#msg_temp');
+                                    workorder_info.$isError = $('#isError');
+                                    workorder_info.$reason = $('#reason');
+
+                                    workorder_info.$odf2_validata = $('#odf2_validata');
+                                    workorder_info.$ter_validate = $('#ter_validate');
+                        
+									workorder_info.$odf2_id = $('#odf2_id');
+                                    workorder_info.$ter_id = $('#ter_id');
+                                  
+                                    workorder_info.operatorType = {
+                                        1:'移动',
+                                        2:'联通',
+                                        3:'电信',
+                                    };
+                                    workorder_info.mapStateWord ={
+                                        '100' :'等待审批',
+                                        '200' :'等待分配资源',
+                                        '300' :'等待指派施工人员',
+                                        '400' :'等待施工',
+                                        '401' :'施工中',
+                                        '500' :'等待结单审核',
+                                        '600' :'完成',
+                                        '700' :'已取消工单',
+                                        '999999' : '异常工单'
+                                    };
+
+                                var $doc = $doc || $(document);
+                                $doc.delegate("[name='btn_endOrder']","click",function(){
+                                    var $id = workorder_info.$msg_list.find('#msg_id').html();
+                                    var $version = workorder_info.$msg_list.find('#msg_version').html();
+                                    workorder_info.fn.callEndWorkOrder($id,$version);
+                                });
+                             	
+                                workorder_info.fn = {};
+                                workorder_info.fn.callEndWorkOrder = function (id,version) {
+                                   
+                                    var url = utils.data.workorderUrl+'equipWorkorder';
+                                    var $isError = workorder_info.$isError.val();
+                                    var $reason = workorder_info.$reason.val();
+                                    var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason;
+                                    
+                                    $.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                        alert(result.message);
+                                        page_workorder.fn.callWorkOrder();
+                                    }); 
+                                }
+                                
+                                workorder_info.fn.callWorkOrderMsg = function (id,version) {
+
+
+                                    $.ui.loadContent("#workorder_msg",false,false,"slide");
+                                    workorder_info.fn.addData(id,version);
+
+                                };
+                        		
+                                workorder_info.fn.addData = function (id,version,operator) {
+                               
+                                    var url = utils.data.workorderUrl+'getWorkorder';
+                                    var param = 'workorderId='+id;
+                                    
+                                    $.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                        workorder_info.fn.setOrderMsg(workorder_info.$msg_temp,workorder_info.$msg_list,result,operator);
+                                    }); 
+                                };
+                                workorder_info.fn.setOrderMsg = function (tempListObj,listObj, data, operator) {
+                                
+                                   
+                                    function addItems(val, _operator) {
+                                        var temp = tempListObj.html()
+                                        .replace(/\$id/g,val.id)
+                                        .replace(/\$version/g,val.version)
+                                        .replace(/\$address/g,val.addressLevel4+''+val.addressLevel6+''+val.addressLevel7)
+                                        .replace(/\$contactsName/g,val.contactsName)
+                                        .replace(/\$contactPhone/g,val.contactPhone)
+                                        .replace(/\$applicationDate/g,utils.formatDate(val.applicationDate,'yyyy-MM-dd'))
+                                        .replace(/\$importTime/g,utils.formatDate(val.importTime,'yyyy-MM-dd'))
+                                        .replace(/\$importType/g,val.importType)
+                                        .replace(/\$importer/g,val.importer)
+                                        .replace(/\$status/g,workorder_info.mapStateWord[val.status])
+                                        .replace(/\$operators/g,workorder_info.operatorType[val.operators])
+
+                                        ;
+                                        listObj.html(temp);
+                                    }
+                                    addItems(data,operator);
+                                };
+                        		
+                        		
+                    </script>
+                </div>
+                <!--  -------------- end 工单信息 --------------  -->
+                <!--  -------------- start 资源管理 --------------  -->
+                <div id="resource_manager" class="panel appground"  data-nav="nav_mySide" title="资源管理"  >
+                    
+                    <div class="container ui-sortable" style="width: 50%;margin:auto auto;text-align:center;padding: 10% 10%;" >
+                        <br/>
+                            <img id="scanner" alt="一维码扫描" src="icon/scanner.jpg" title="一维码扫描"/>  
+                        <br/>
+                    </div>
+                    <div class="container ui-sortable" style="width: 50%;margin:auto auto;text-align:center;padding: 10% 10%;" >
+                         <br/>
+                            <img  id="resourceManager" alt="资源查改" style="" class="" src="icon/resource.jpg" title="资源查改"/>
+                         <br/>
+                    </div>
+                    <script type="text/javascript">
+                        var manager = {};
+                            manager.utils = {};
+                            manager.utils.callManager = function () {
+                                $.ui.loadContent("#resource_manager",false,false,"slide");
+                                $.ui.hideMask();
+                            };
+                    </script>
+                </div>
+                <!--  -------------- end 资源管理 --------------  -->
+                <!--  -------------- start 端口信息 --------------  -->
+                <div id="port_msg" class="panel appground"  title="端口信息"  >
+                    <div id="link_item" style=""></div><!-- item 中如果有js运用要所以把item放在temp之前 -->
+                    <div id="link_temp" style="display:none;">
+                        <div>
+                            <h2 class="expanded" id="scanner_msg" onClick="showHide(this,'scanner_msg_form');" style="margin-left:16px;">一维码信息</h2>
+                            <form id="scanner_msg_form">
+                                <div class="input-group">
+                                    <ul class="list inset" style="margin:0 0;"> <li class="divider" id="query_type">$type</li></ul>
+                                    <span id="scannerCode" style="display:none;">$scnanerCode</span>
+                                    <!-- <label for="scanner_address" style="width:20%;">地址：</label> -->
+                                    <br/>
+                                    <span id="scanner_address" class="spanPadding">地址：$current_address</span>
+                                    <span id="scanner_portname" class="spanPadding">端口名称：$current_portname</span>
+                                </div>
+                            </form>
+                        </div>
+                        <hr/>
+                        <div>
+                            <h2 class="expanded" id="link_msg" onClick="showHide(this,'link_msg_form');" style="margin-left:16px;">链路信息</h2>
+                            <form id="link_msg_form">
+                                <div class="input-group">
+                                    <ul class="list inset" style="margin:0 0;">
+                                         <li class="divider" style="padding-right:1%;">
+                                            分光器/ODF1
+                                            <span style="float:right;">
+                                                <img id="scanner_btn_splitter" alt="扫描" style="position:relative;height:3%;"src="icon/scanner_btn.jpg" title="扫描"/>  
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <!-- <label for="splitter_address" style="width:20%;">地址：</label> -->
+                                    <br/>
+                                    <span id="splitter_address" class="spanPadding">地址：$odf1_address</span>
+                                   
+                                </div>
+                                <div class="input-group">
+                                    <ul class="list inset" style="margin:0 0;"> 
+                                        <li class="divider" style="padding-right:1%;">
+                                            ODF2
+                                            <span style="float:right;">
+                                                <img id="scanner_btn_odf2" alt="扫描" style="position:relative;height:3%;"src="icon/scanner_btn.jpg" title="扫描"/>  
+                                            </span>
+                                        </li>
+                                    </ul>
+                                  <!--   <label for="scanner_address3" style="width:20%;">安装地址：</label> -->
+                                  <br/>
+                                    <span id="odf_address" class="spanPadding">安装地址：$odf_address</span>
+                                    <br/>
+                                    <span id="odf_portname" class="spanPadding">端口名称：$odf_portname</span>
+                                  
+                                </div>
+                                <div class="input-group">
+                                    <ul class="list inset" style="margin:0 0;"> 
+                                        <li class="divider" style="padding-right:1%;">
+                                            楼道配线箱端口
+                                            <span style="float:right;">
+                                                <img id="scanner_btn_box" alt="扫描" style="position:relative;height:3%;"src="icon/scanner_btn.jpg" title="扫描"/>  
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <!-- <label for="box_address" style="width:20%;">安装地址：</label> -->
+                                    <br/>
+                                    <span id="box_address" class="spanPadding">安装地址：$box_address</span>
+                                    <br/>
+                                    <span id="box_portname" class="spanPadding">端口名称：$box_portname</span>
+                                
+                                </div>
+                                <div class="input-group">
+                                    <ul class="list inset" style="margin:0 0;">
+                                        <li class="divider" style="padding-right:1%;">
+                                            客户端皮线光纤端口
+                                            <span style="float:right;">
+                                                <img id="scanner_btn_ter" alt="扫描" style="position:relative;height:3%;"src="icon/scanner_btn.jpg" title="扫描"/>  
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <!-- <label for="ter_address" style="width:20%;">地址：</label> -->
+                                    <br/>
+                                    <span id="ter_address" class="spanPadding">地址：$ter_address</span>
+                                   
+                                </div>
+                            </form>
+                        </div>
+                     </div>
+                    
+                    <hr/>
+                    <!-- <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
+                        <a id="btn_alter_link_msg" class="button" style="width:100%;height:45px;background-color:#0088D1;color:white;font-size:20px;" href="javascript:void(0);">修改</a>
+                    </div> -->
+                    <script type="text/javascript">
+                        var link = {};
+                            link.$link_temp = $('#link_temp');
+                            link.$link_item = $('#link_item');
+                            link.$scanner_msg_form = $('#scanner_msg_form');
+                            link.fn = {};
+                            link.fn.callLink = function (type, id, company) {
+
+                                $.ui.loadContent('#port_msg',false,false,"slide");  
+                                link.fn.getDetail(type,id);  
+                            };
+                            var $doc = $doc || $(document);
+                            /*$doc.delegate("#link_msg","tap",function(){
+                                showHide(this,'link_msg_form');
+                            });
+                            $doc.delegate("#scanner_msg","tap",function(){
+                                showHide(this,'scanner_msg_form');
+                                
+                            });*/
+                            link.fn.getDetailFromBarCode = function (result) {
+                                $.ui.loadContent('#port_msg',false,false,"slide"); 
+                                link.fn.getDetail(null,null,result);
+                                showHide($('#link_msg'),'link_msg_form');
+                                showHide($('#link_msg'),'link_msg_form');
+                            }
+                            link.fn.getDetail = function (type,id,result) {
+                                var newType = type == null ? result.type : type;
+                                var val = "";
+                                var mapType = {
+                                    ODF2 : 'ODF2',
+                                    BOX : '楼道配线箱',
+                                    TER : '用户皮线光纤'
+                                };
+                                if (result) {
+                                    addItem(result.link);
+                                    $.ui.hideMask();
+                                } else {
+                                    var url = utils.data.resourceManagerUrl + 'getLinkMsg';
+                                    var param = 'id='+id+'&type='+newType;
+                                    $.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                        if (result) {
+                                            addItem(result);
+                                        } else {
+                                            alert('此端口没有链路信息！');
+                                        }
+                                    }); 
+                                 
+                                }
+                                function setVal(val) {
+                                    if (!val) {
+                                        return '无';
+                                    } else {
+                                        return val;
+                                    }
+
+                                }
+                                /*var mapAddItem = {
+                                    ODF2 : addODFAndBOX,
+                                    BOX : addODFAndBOX,
+                                    TER : addTER 
+                                };*/
+                                function addItem (val) {
+                                    var odf_address = val.vODF.address+'('+val.vODF.installAddress+')';
+                                    var box_address = val.vBOX.address+'('+val.vBOX.installAddress+')';
+                                    var mapCurrent = {
+                                        ODF2 : odf_address,
+                                        BOX : box_address,
+                                        TER : val.vTER.address
+                                    };
+                                    var mapCurrentPort = {
+                                        ODF2 : val.vODF.portName,
+                                        BOX : val.vBOX.portName,
+                                        TER : val.vTER.portName
+                                    };
+                                    var html = "";
+                                        var temp = ""; 
+                                        temp = link.$link_temp.html()
+                                        .replace(/\$id/g,val.id)
+                                        .replace(/\$ter_id/g,val.resTerminalPortsId)
+                                        .replace(/\$odf2_id/g,val.resODFPortsId)
+                                        .replace(/\$type/g,setVal(mapType[newType]))
+                                        .replace(/\$odf1_address/g,setVal(val.vSPL.address))
+                                        .replace(/\$current_portname/g,setVal(mapCurrentPort[newType]))
+                                        .replace(/\$current_address/g,setVal(mapCurrent[newType]))
+                                        .replace(/\$odf_address/g,setVal(odf_address))
+                                        .replace(/\$box_address/g,setVal(box_address))
+                                        .replace(/\$odf_portname/g,setVal(val.vODF.portName))
+                                        .replace(/\$box_portname/g,setVal(val.vBOX.portname))
+                                        //.replace(/\$insertdate/g,utils.formatDate(val.insertdate,'yyyy-MM-dd'))
+                                        .replace(/\$ter_address/g,setVal(val.vTER.address));
+                                        
+                                        html += temp;
+                                   
+                                    link.$link_item.html(html);
+                                }
+                            };
+                    </script>
+                </div>
+                <!--  -------------- end 端口信息 --------------  -->
+                <!--  -------------- start 资源改查 --------------  -->
+                <div id="resource_query" class="panel appground"  data-nav="nav_mySide" title="资源改查" scolling="yes">
+                    <div id="resource_search">
+                        <div class="input_element from_element" style="float:left;width:50%;overflow:hidden;padding:2% 2% 0% 2%;">
+                            <input type="text" id="resource_search_address" placeholder="输入地址"/>
+                        </div>
+                        <div class="input_element from_element" style="float:left;width:30%;overflow:hidden;padding:2% 2% 0% 2%;">
+                            <select id="resource_search_type">
+                                <option value="ODF2">ODF2</option>
+                                <option value="BOX">楼道配线箱</option>
+                                <option value="TER">皮线光纤</option>
+                            </select>
+                        </div>
+                        <div class="input_element from_element" style="float:left;width:20%;overflow:hidden;padding:1% 2% 0% 2%;">
+                            <a id="btn_query_resource" href="javascript:void(0);" onClick="" class="button fa fa-search fa-lg" style="pading:12px 12px;"></a>
+                        </div>
+                    </div>
+                    <div>&nbsp;</div>
+                         <ul class="list inset"  id="resource_list" style="">
+                           
+                            <!-- <li name="popSelect">
+                                <span id="address">地址：$address</span>
+                                <a href="javascript:void(0);" id="type">类型：<span>$type</span></a>
+                                <span id="ports_count">端口数：$ports</span>
+                            
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋405号</span></a>
+                                <a class="icon pin" style="overflow:hidden;" href="#">施工中</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋404号</span></a>
+                                <a class="icon warning" style="overflow:hidden;" href="#">异常</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋403号</span></a>
+                                <a class="icon check" style="overflow:hidden;" href="#">完成</a>
+                            </li> -->
+                        </ul>
+                        <ul class="list inset"  id="resource_temp_odf_box" style="display:none;">
+                            <li name="popResourceSelect">
+                                <span id="$id" style="display:none;"></span>
+                                <a href="javascript:void(0);" id="$id">小区名称：$ADDRESSLEVEL4</a>
+                                <span id="address">地址：$address</span>
+                                <br/>
+                                <!-- <a href="javascript:void(0);" id="$id">类型：<span>$type</span></a> -->
+
+                                <!-- odf 和楼道配线箱 以后改成百分比 -->
+                               <!--  <span id="ports_official">占用情况：$official</span>
+                                <br/> -->
+                                <span id="ports_count">运营商：$company</span>
+                            </li>
+                        </ul>
+                        <ul class="list inset"  id="resource_temp_ter" style="display:none;">
+                            <li name="popResourceSelect">
+                                <span id="$id" style="display:none;"></span>
+                                <a href="javascript:void(0);" id="$id">小区名称：$ADDRESSLEVEL4</a>
+                                <span id="address">地址：$address</span>
+                                <br/>
+                                <!-- <a href="javascript:void(0);" id="$id">类型：<span>$type</span></a> -->
+
+                                <!-- odf 和楼道配线箱 以后改成百分比 -->
+                                <span id="ports_official">占用情况：$official</span>
+                                <br/>
+                                <span id="ports_count">运营商：$company</span>
+                            </li>
+                        </ul>
+                        <span id="resource_pageNum" style="display:none;">1</span>
+                        
+                        <div class="input_element from_element" id="resource_bottom" style="width:100%;position:relative;padding:2% 2% 2% 2%;">     
+                            <a href="javascript:void(0);" id="btn_add_res" class="button bottom load" style="width:100%;height:30px;font-size:13px;" >加载数据</a>
+                            <a href="javascript:void(0);" id="btn_last" class="button bottom last" style="width:100%;height:30px;font-size:13px;display:none;" >最后一页了</a>
+                            <a href="javascript:void(0);" id="btn_res_noData" class="button bottom noData" style="width:100%;height:30px;font-size:13px;display:none;" >无数据</a>
+                        </div>
+                        <script type="text/javascript" charset="utf-8">
+                            var page_resource = {};
+                                page_resource.$btn_query_resource = $('#btn_query_resource');
+                                page_resource.$resource_list = $('#resource_list');
+                                page_resource.$resource_search_address = $('#resource_search_address');
+                                page_resource.$resource_search_type = $('#resource_search_type');
+                                page_resource.$resource_temp_odf_box = $('#resource_temp_odf_box');
+                                page_resource.$resource_temp_ter = $('#resource_temp_ter');
+                                page_resource.$resourceManager = $('#resourceManager');
+                                page_resource.$btn_add_res = $('#btn_add_res');
+                                page_resource.$pageNum = $('#resource_pageNum');
+                                page_resource.$resource_bottom = $('#resource_bottom');
+
+                                var $doc = $doc || $(document);
+                                //进入资源查询接口
+                                page_resource.$resourceManager.click(function(){
+                                   //进入资源改查
+                                   page_resource.fn.callResource();
+                                   
+                                });
+                                $doc.delegate("[name='popResourceSelect']","click",function(){
+                                   var $this = $(this);
+                                   var $id = $this.find('a').attr('id');
+                                   var $company = $this.find('#res_company');//此处res_company 在myUtils.getCompany中添加
+                                  
+                                   page_resource.fn.showReourceSheet($id,$company.html());
+                                });
+                                //加载新数据
+                                page_resource.$btn_add_res.click(function(){
+                                    var oldPageNum = page_resource.$pageNum.html();
+                                    var newPageNum = page_resource.$pageNum.html(parseInt(oldPageNum)+1);
+                                   
+                                    page_resource.fn.addData("add");
+                                    
+                                });
+                                //查询
+                                page_resource.$btn_query_resource.click(function(){
+                                    page_resource.fn.callResource(/*page_resource.$resource_search_address.val()*/);
+                                });
+                                
+                                page_resource.fn = {};
+
+                                page_resource.fn.addData = function (operator) {
+
+                                    var val = page_resource.$resource_search_address.val();
+                                    var type = page_resource.$resource_search_type.val();
+                                    /*var mapType = {
+                                        ODF2 : 'ODF2',
+                                        BOX : 'BOX',
+                                        TER : 'TER'
+                                    };*/
+                                    var mapListHtml = {
+                                        ODF2 : page_resource.$resource_temp_odf_box,
+                                        BOX : page_resource.$resource_temp_odf_box,
+                                        TER : page_resource.$resource_temp_ter
+                                    };
+                                    //ws方法名
+                                    var mapUrl = {
+                                        ODF2 : 'getODFList',
+                                        BOX : 'getBOXList',
+                                        TER : 'getTERList'
+                                    };
+
+                                    var url = utils.data.resourceManagerUrl + mapUrl[type];
+                                    if (operator!='add') {
+                                        page_resource.$pageNum.html('1');
+                                    }
+                                    var paramVal = 'address='+val+'&pageSize=10&pageNum='+page_resource.$pageNum.html();
+                                    var mapParam = {
+                                        ODF2 : paramVal,
+                                        BOX : paramVal,
+                                        TER : paramVal
+                                    };
+                                    var param = mapParam[type];
+                                    //调用ws的jsonp模式 get方式
+                                   /* 
+                                    if (myPhoneGapApi.utils.getConnection()) {
+                                        alert('使用本地数据库');
+                                    } else {
+                                        utils.wsJsonPUUID(url,param,function(result){
+                                            $.ui.hideMask();
+                                            
+                                            addItems(result,operator);
+                                        });
+                                       
+                                    }*/
+                                    //console.log(dbDataBase.doGetUUID());
+                                    
+                                    /*$.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                        
+                                        addItems(result,operator);
+                                    });*/
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+                                       // console.log(result);
+                                        addItems(result,operator);
+                                    });
+                                    /*var data = [
+                                        {
+                                                address:'广州天河区五山路五山小区a栋404号',id:'1',applicationDat:'2011-11-12',status:'200',company:'电信'
+                                        },
+                                        {
+                                                address:'广州天河区五山路五山小区a栋401号',id:'2',applicationDat:'',status:'200',company:'电信'
+                                        }, 
+                                        {
+                                                address:'广州天河区五山路五山小区a栋402号',id:'3',applicationDat:'',status:'200',company:'联通'
+                                        }, 
+                                        {
+                                                address:'广州天河区五山路五山小区a栋405号',id:'4',applicationDat:'',status:'200',company:'联通'
+                                        }
+                                
+                                    ];
+                                    addItems(data,operator);*/
+                                    function addItems(val,operator) {
+
+                                        var html = "";
+                                        var PStart = val.PStart + '';
+                                        page_resource.$pageNum.html(PStart);
+                                        $.each(val.items,function(i,item){
+                                            var temp = "";
+                                            temp = mapListHtml[type].html() 
+                                            .replace(/\$id/g,item.id)
+                                            .replace(/\$address/g,item.address)
+                                            //.replace(/\$insertdate/g,utils.formatDate(item.insertdate,'yyyy-MM-dd'))
+                                            .replace(/\$ADDRESSLEVEL4/g,item.ADDRESSLEVEL4)
+                                            .replace(/\$official/g,myUtils.getOfficial(item.official))
+                                            .replace(/\$company/g,myUtils.getCompany(item.company));
+                                            
+                                            html += temp;
+                                        });
+                                        if (operator=='add') {
+                                            page_resource.$resource_list.append(html);
+                                        } else {
+                                            page_resource.$pageNum.html('1');
+                                            page_resource.$resource_list.html(html);
+                                        }
+                                        if (val.PStart == val.PTotal) {
+                                            $('.bottom').hide();
+                                            $('.last').show();
+                                        } else if (val.PTotal == 0) {//无数据时
+                                            $('.bottom').hide();
+                                            $('.noData').show();
+                                        } else {
+                                            $('.bottom').hide();
+                                            $('.load').show();
+                                        }
+                                          
+                                    }
+                                };
+                                page_resource.fn.callResource = function (){
+                                    //  alert("进入我资源");
+                                    $.ui.loadContent("#resource_query",false,false,"slide");
+                                    $('#navbar_manager').addClass('pressed');
+                                    $('#navbar_workorder').removeClass('pressed');
+                                    page_resource.fn.addData();
+                                    
+                                };
+                                //底层弹出框
+                                page_resource.fn.showReourceSheet = function (valId,company) {
+                                    var type = page_resource.$resource_search_type.val();
+                                    if ( type != 'TER' ) {
+                                        $("#afui").actionsheet([
+                                           /* {                                
+                                                text: '查看资源',                    
+                                                cssClasses: 'viewResource',   
+                                                handler: function () {  
+                                                    page_resource_detail.fn.callResourceDetail(type,valId);         
+                                                    
+                                                }                           
+                                            },*/
+                                            {                                
+                                                text: '查看该资源所有端口',                 
+                                                cssClasses: 'viewAllPorts',            
+                                                handler: function () {  
+                                                    page_ports.fn.callPort(valId,type);              
+                                                }                           
+                                            }
+                                        ]);                                   
+                                   } else {
+                                        if (myPhoneGapApi.utils.getConnection()) {
+                                            $("#afui").actionsheet([
+                                                /*{                                
+                                                    text: '查看资源',                    
+                                                    cssClasses: 'viewPort',   
+                                                    handler: function () {       
+                                                        page_resource_detail.fn.callResourceDetail(type,valId);
+                                                    }                           
+                                                },*/
+                                                {
+                                                    text: '查看链路',
+                                                    cssClasses: 'viewLink',
+                                                    handler: function () {
+                                                       link.fn.callLink(type,valId,company);
+                                                    }
+                                                }
+                                            ]);  
+                                        }  
+                                   }
+
+                                };
+                        </script>
+                </div>
+                <!--  -------------- end 资源改查 --------------  -->
+                <!--  -------------- start 查看资源 --------------  -->
+                <div id="resource_detail" class="panel appground"  title="查看资源" scolling="yes">
+                    <form id="resource_detail_form">
+                        <div class="input-group" id="detail_temp_odfbox" style="display:none;">
+                            <label for="resource_address" style="width:20%;">地址：</label>
+                            <input id="resource_address" type="text" readonly="readonly" value="$address"/>
+                            <label for="resourcer_type" style="width:20%;">类型：</label>
+                            <input id="resource_type" type="text" readonly="readonly" value="$type"/>
+                        </div>
+                        <div class="input-group" id="detail_temp_ter" style="display:none;">
+                            <label for="resource_address" style="width:20%;">地址：</label>
+                            <input id="resource_address" type="text" readonly="readonly" value="$address"/>
+                            <label for="resourcer_type" style="width:20%;">类型：</label>
+                            <input id="resource_type" type="text" readonly="readonly" value="$type"/>
+                        </div>
+                        <div class="input-group" id="detail_item" >
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        var page_resource_detail = {};
+                            page_resource_detail.fn = {};
+                            page_resource_detail.$tempODFBOX = $('#detail_temp_odfbox');
+                            page_resource_detail.$tempTER = $('#detail_temp_ter');
+
+                            page_resource_detail.$item = $('#detail_item');
+
+                            page_resource_detail.fn.callResourceDetail = function (type, id) {
+                                $.ui.loadContent("#resource_detail",false,false,"slide");
+                                page_resource_detail.fn.getDetail(type,id);
+                            };
+                            
+                            page_resource_detail.fn.getDetail = function (type, id) {
+                                var val = "";
+                                var mapType = {
+                                    ODF2 : 'ODF2',
+                                    BOX : '楼道配线箱',
+                                    TER : '用户皮线光纤'
+                                };
+                                //ws方法名
+                                var mapUrl = {
+                                    ODF2 : 'getODF',
+                                    BOX : 'getBOX',
+                                    TER : 'getTERPort'
+                                };
+                                var mapAddItem = {
+                                    ODF2 : addODFAndBOX,
+                                    BOX : addODFAndBOX,
+                                    TER : addTER 
+                                };
+                                function addODFAndBOX (val) {
+                                    var html = "";
+                                    var temp = ""; 
+                                    temp = page_resource_detail.$tempODFBOX.html()
+                                    .replace(/\$id/g,val.id)
+                                    .replace(/\$address/g,val.address)
+                                    .replace(/\$type/g,mapType[type])
+                                    //.replace(/\$insertdate/g,utils.formatDate(val.insertdate,'yyyy-MM-dd'))
+                                    .replace(/\$ADDRESSLEVEL4/g,val.ADDRESSLEVEL4)
+                                    .replace(/\$company/g,myUtils.getCompany(val.company));
+                                    
+                                    html += temp;
+                               
+                                    page_resource_detail.$item.html(html);
+                                }
+                                function addTER (val) {
+
+                                    var html = "";
+                                    var temp = "";
+                                    temp = page_resource_detail.$tempTER.html()
+                                    .replace(/\$id/g,val.id)
+                                    .replace(/\$address/g,val.address)
+                                    .replace(/\$type/g,mapType[type])
+                                    //.replace(/\$insertdate/g,utils.formatDate(val.insertdate,'yyyy-MM-dd'))
+                                    .replace(/\$ADDRESSLEVEL4/g,val.ADDRESSLEVEL4)
+                                    .replace(/\$company/g,myUtils.getCompany(val.company));
+                                    
+                                    html += temp;
+                                    page_resource_detail.$item.html(html);
+                                }
+                                var url = utils.data.resourceManagerUrl + mapUrl[type];
+                                var param = 'id='+id+'&pageNum=1&pageSize=10';
+                                $.ui.showMask('请稍后');
+                                utils.wsJsonPUUID(url,param,function(result){
+                                    $.ui.hideMask();
+                                    mapAddItem[type](result);
+                                }); 
+                               
+                            };
+                    </script>    
+                </div>
+                <!--  -------------- end 查看资源 --------------  -->
+                <!--  -------------- start 查看所有端口 --------------  -->
+                <div id="resource_viewAllPort" class="panel appground"  data-nav="nav_mySide" title="查看所有端口" scolling="yes">
+                    <div id="ports_search">
+                        <div class="input_element from_element" style="float:left;width:80%;overflow:hidden;padding:2% 2% 0% 2%;">
+                            <input type="text" id="port_search_address" placeholder="输入端口名称"/>
+                        </div>
+                        <div class="input_element from_element" style="float:left;width:20%;overflow:hidden;padding:1% 2% 0% 2%;">
+                            <a href="javascript:void(0);" id="btn_port_query" class="button fa fa-search fa-lg" style="pading:12px 12px;"></a>
+                        </div>
+                    </div>
+                    <div>&nbsp;</div>
+                        <ul class="list inset"  id="port_temp" style="display:none;">
+                            <li name="popPortSelect">
+                                <span id="$id" style="display:none;"></span>
+                                <a href="javascript:void(0);" id="$id">端口名称：<span>$name</span></a>
+                              
+                                <span id="company">运营商：$company</span>
+                                <br/>
+                                <span id="res_port">占用情况：$official</span>
+                                <br/>
+                                <span id="type">类型：$type</span>
+                            </li>
+                        </ul>
+                        <span id="ports_pageNum" style="display:none;">1</span>
+                        <span id="baseId" style="display:none;"></span>
+                        <span id="port_type" style="display:none;"></span>
+                        <ul class="list inset"  id="port_list" style="">
+                           
+                            <!-- <li name="popSelect">
+                                <span id="address">地址：$address</span>
+                                <a href="javascript:void(0);" id="type">类型：<span>$type</span></a>
+                                <span id="ports_count">端口数：$ports</span>
+                            
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋405号</span></a>
+                                <a class="icon pin" style="overflow:hidden;" href="#">施工中</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋404号</span></a>
+                                <a class="icon warning" style="overflow:hidden;" href="#">异常</a>
+                            </li>
+                            <li>
+                                <a href="#">地址：<span>广州天河区五山路五山小区a栋403号</span></a>
+                                <a class="icon check" style="overflow:hidden;" href="#">完成</a>
+                            </li> -->
+                        </ul>
+                         <div class="input_element from_element" id="port_bottom" style="width:100%;position:relative;padding:2% 2% 2% 2%;">     
+                            <a href="javascript:void(0);" id="btn_add_port" class="button bottom load" style="width:100%;height:30px;font-size:13px;" >加载数据</a>
+                            <a href="javascript:void(0);" id="btn_port_last" class="button bottom last" style="width:100%;height:30px;font-size:13px;display:none;" >最后一页了</a>
+                            <a href="javascript:void(0);" id="btn_port_noData" class="button bottom noData" style="width:100%;height:30px;font-size:13px;display:none;" >无数据</a>
+                        </div>
+                        <script type="text/javascript" charset="utf-8">
+                            var $doc = $doc || $(document);
+                            $doc.delegate("[name='popPortSelect']","tap",function(){
+                                   var $this = $(this);
+                                   var $id = $this.find('a').attr('id');
+                                   var $company = $this.find('#res_company');
+                                   page_ports.fn.showPortSheet($id,$company.html());
+                            });
+
+
+                            var page_ports = {};
+                                page_ports.$port_temp = $('#port_temp');
+                                page_ports.$port_list = $('#port_list');
+                                page_ports.$port_search_address = $('#port_search_address');
+                                page_ports.$btn_port_query = $('#btn_port_query');
+                                page_ports.$pageNum = $('#ports_pageNum');
+                                page_ports.$btn_add_port = $('#btn_add_port');
+                                page_ports.$baseId = $('#baseId');
+                                page_ports.$port_type = $('#port_type');
+
+                                //加载新数据
+                                page_ports.$btn_add_port.click(function(){
+                                    var oldPageNum = page_ports.$pageNum.html();
+                                    var PageNum = page_ports.$pageNum.html(parseInt(oldPageNum)+1);
+                                    page_ports.fn.addData("add");
+                                });
+                                //查询
+                                page_ports.$btn_port_query.click(function(){
+                                    page_ports.fn.callPort();
+                                });
+                                page_ports.fn = {};
+                                page_ports.fn.callPort = function (id,type) {
+                                    $.ui.loadContent("#resource_viewAllPort",false,false,"slide");
+                                    //记录端口类型和baseid
+                                    page_ports.$baseId.html(id);
+                                    page_ports.$port_type.html(type);
+                                    page_ports.fn.addData();
+                                };
+
+                                page_ports.fn.addData = function (operator) {
+                                    var val = page_ports.$port_search_address.val();
+                                    var type = page_ports.$port_type.html();
+                                    var mapType = {
+                                        ODF2 : 'ODF',
+                                        BOX : '楼道配线箱端口',
+                                        TER : '用户皮线光纤'
+                                    };
+                                    //ws方法名
+                                    var mapUrl = {
+                                        ODF2 : 'getODFPortsList',
+                                        BOX : 'getBOXPortsList'
+                                    };
+                                    var url = utils.data.resourceManagerUrl + mapUrl[type];
+
+                                    if (operator!='add') {
+                                        page_ports.$pageNum.html('1');
+                                    }
+                                    var paramVal = 'portName='+val+'&baseId=' + page_ports.$baseId.html() + '&pageSize=10&pageNum='+page_ports.$pageNum.html();
+                                    var mapParam = {
+                                        ODF2 : paramVal,
+                                        BOX : paramVal
+                                    };
+                                    var param = mapParam[type];
+                                    //调用ws的jsonp模式 get方式
+                                    $.ui.showMask('请稍后');
+                                    utils.wsJsonPUUID(url,param,function(result){
+                                        $.ui.hideMask();
+
+                                        addItems(result,operator);
+                                    });
+
+                                    /*var data = [
+                                                 {'address':'广州天河区五山路五山小区a栋406号','id':'1', 'name':'A2','type':'ODF2','ports':'10'},
+                                                 {'address':'广州天河区五山路五山小区a栋405号','id':'2', 'name':'A3','type':'楼道配线箱','ports':'110'},
+                                                 {'address':'广州天河区五山路五山小区a栋404号','id':'3', 'name':'A2','type':'皮线光纤','ports':'1330'},
+                                                 {'address':'广州天河区五山路五山小区a栋403号','id':'5', 'name':'A23','type':'ODF2','ports':'1110'},
+                                                 {'address':'广州天河区五山路五山小区a栋402号','id':'6', 'name':'A21','type':'皮线光纤','ports':'220'},
+                                                 {'address':'广州天河区五山路五山小区a栋401号','id':'4', 'name':'A12','type':'楼道配线箱','ports':'1230'},
+                                                 {'address':'广州天河区五山路五山小区a栋410号','id':'7', 'name':'A223','type':'皮线光纤','ports':'230'},
+                                                 {'address':'广州天河区五山路五山小区a栋411号','id':'8', 'name':'A23','type':'楼道配线箱','ports':'10'},
+                                                 {'address':'广州天河区五山路五山小区a栋412号','id':'9', 'name':'A1','type':'皮线光纤','ports':'101'}
+                                    ];
+                                    addItems(data);*/
+
+                                    function addItems(val,operator) {
+                                        
+                                        var html = "";
+                                        $.each(val.items,function(i,item){
+                                            var temp = "";
+                                            temp = page_ports.$port_temp.html()
+                                            .replace(/\$id/g,item.id)
+                                            .replace(/\$address/g,item.address+'('+item.installAddress+')')
+                                            .replace(/\$name/g,item.portName)
+                                            .replace(/\$company/g,myUtils.getCompany(item.company))
+                                            .replace(/\$official/g,myUtils.getOfficial(item.official))
+                                            .replace(/\$type/g,mapType[type]);
+                                            
+                                            html += temp;
+                                        });
+                                        if (operator=='add') {
+                                            page_ports.$port_list.append(html);
+                                        } else {
+                                            page_ports.$pageNum.html('1');
+                                            page_ports.$port_list.html(html);
+                                        }
+                                        if (val.PStart == val.PTotal) {
+                                            $('.bottom').hide();
+                                            $('.last').show();
+                                        } else if (val.PTotal == 0) {//无数据时
+                                            $('.bottom').hide();
+                                            $('.noData').show();
+                                        } else {
+                                            $('.bottom').hide();
+                                            $('.load').show();
+                                        }
+                                    }
+                                   
+                                };
+                           
+                            
+                            //底层弹出框
+                            page_ports.fn.showPortSheet = function (valId,company) { 
+                                 var type = page_ports.$port_type.html();          
+                                 if (myPhoneGapApi.utils.getConnection()) {
+                                     $("#afui").actionsheet([
+                                        {                                
+                                            text: '查看端口',                    
+                                            cssClasses: 'viewPort',   
+                                            handler: function () {             
+                                                port_detail.fn.callPortDetail(type,valId);         
+                                            }                           
+                                        },
+                                        {                                
+                                            text: '查看链路',                 
+                                            cssClasses: 'viewLink',            
+                                            handler: function () {  
+                                                link.fn.callLink(type,valId,company);   
+                                            }                           
+                                        }
+                                    ]);                    
+                                 }              
+                            }       
+                        </script>
+                        
+                </div>
+                <!--  -------------- end 查看所有端口 --------------  -->
+                <!--  -------------- start 查看端口 --------------  -->
+                <div id="port_detail" class="panel appground"  data-nav="nav_mySide" title="查看端口" scolling="yes">
+                    <form id="port_detail_form">
+                        <div class="input-group" id="port_detail_temp" style="display:none;">
+                            <span id="$id" style="display:none;">$id</span>
+                            <!-- <label for="port_address" style="width:20%;">安装地址：</label> -->
+                            <br/>
+                            <span class="spanPadding" id="port_address" >安装地址：$address</span>
+                            <!-- <label for="portr_type" style="width:20%;">类型：</label> -->
+                            <br/>
+                            <span class="spanPadding" id="port_type" >类型：$type</span>
+                            <!-- <label for="portr_name" style="width:20%;">端口名称：</label> -->
+                            <br/>
+                            <span class="spanPadding" id="port_name" >端口名称：$name</span>
+                        </div>
+                        <div class="input-group" id="port_detail_item">
+                        </div>
+                    </form>
+                    <script type="text/javascript" charset="utf-8">
+                        var port_detail = {};
+                            port_detail.$port_detail_item = $('#port_detail_item');
+                            port_detail.$port_detail_temp = $('#port_detail_temp');
+
+
+                            port_detail.fn = {};
+                            port_detail.fn.callPortDetail = function (type, id, company) {
+                                $.ui.loadContent("#port_detail",false,false,"slide");
+                                port_detail.fn.getDetail(type,id);
+                                
+                            };
+                            port_detail.fn.getDetail = function (type, id) {
+                                var val = "";
+                                var mapType = {
+                                    ODF2 : 'ODF2',
+                                    BOX : '楼道配线箱',
+                                    TER : '用户皮线光纤'
+                                };
+                                //ws方法名
+                                var mapUrl = {
+                                    ODF2 : 'getODFPort',
+                                    BOX : 'getBOXPort'/*,
+                                    TER : 'getTERPort'*/
+                                };
+                                var mapAddItem = {
+                                    ODF2 : addODFAndBOX,
+                                    BOX : addODFAndBOX,
+                                    TER : addTER 
+                                };
+                                function addODFAndBOX (val) {
+                                    var html = "";
+                                    
+                                        var temp = "";
+                                        temp = port_detail.$port_detail_temp.html()
+                                        .replace(/\$id/g,val.id)
+                                        .replace(/\$address/g,val.address+'('+val.installAddress+')')
+                                        .replace(/\$name/g,val.portName)
+                                        .replace(/\$company/g,myUtils.getCompany(val.company))
+                                        .replace(/\$type/g,mapType[type]);
+                                            
+                                        html += temp;
+                                
+                                   
+                                    port_detail.$port_detail_item.html(html);
+                                }
+                                function addTER (val) {
+
+                                    var html = "";
+                                   
+                                        var temp = "";
+                                        temp = port_detail.$port_detail_temp.html()
+                                        .replace(/\$id/g,val.id)
+                                        .replace(/\$address/g,val.address+'('+val.installAddress+')')
+                                        .replace(/\$name/g,val.portName)
+                                        .replace(/\$company/g,myUtils.getCompany(val.company))
+                                        .replace(/\$type/g,mapType[type]);
+                                            
+                                        html += temp;
+                                   
+                                   
+                                   port_detail.$port_detail_item.html(html);
+                                }
+                                var url = utils.data.resourceManagerUrl + mapUrl[type];
+                                var param = 'id='+id+'&pageNum=1&pageSize=10';
+                                $.ui.showMask('请稍后');
+                                utils.wsJsonPUUID(url,param,function(result){
+                                    $.ui.hideMask();
+                                    mapAddItem[type](result);
+                                }); 
+                               
+                            };
+                    </script>
+                </div>
+                <!--  -------------- end 查看端口 --------------  -->
+            </div>
+             <!--  -------------- end 主体 --------------  -->
+
+            <!--  -------------- start 底部工具栏 --------------  -->
+            <div id="navbar">
+                <a id="navbar_workorder" class="icon pencil big pressed" href="#my_workorder">我的工单</a>
+                <a id="navbar_manager" class="icon settings big" href="#resource_manager">资源管理</a>
+            </div>  
+            <!--  -------------- end 底部工具栏 --------------  -->
+            <!--  -------------- start 侧边栏 --------------  -->
+            <nav id="nav_mySide">
+                <ul class="list">
+                    
+                    <li class="divider">工单</li>
+                        <li>
+                            <a href="javascript:void(0);" id="nav_workorder">我的工单</a>
+                        </li>
+                    <li class="divider">资源管理</li>
+                        <li>
+                            <a href="javascript:void(0);" id="nav_scanner">一维码扫描</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" id="nav_resourceQuery">资源改查</a>
+                        </li>
+                   <li class="divider">资源本地化</li>
+                        <li>
+                            <a href="javascript:void(0);" id="nav_downLoadDB">下载资源</a>
+                        </li>
+                    <li class="divider">模式选择</li>
+                        <li>
+                            <a href="javascript:void(0);" id="nav_offLine">离线</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" id="nav_onLine">在线</a>
+                        </li>
+                    
+                    <li class="divider">登录</li>
+                        <li>
+                            <a href="javascript:void(0);" id="login">首页</a>
+                        </li>
+                       
+                </ul>
+            </nav>
+             <script type="text/javascript" charset="utf-8">
+                var side_nav = {};
+                    side_nav.$nav_workorder = $('#nav_workorder');
+                    side_nav.$nav_scanner = $('#nav_scanner');
+                    side_nav.$nav_resourceQuery = $('#nav_resourceQuery');
+                    side_nav.$nav_downLoadDB = $('#nav_downLoadDB');
+                    side_nav.$nav_offLine = $('#nav_offLine');
+                    side_nav.$nav_onLine = $('#nav_onLine');
+                    side_nav.$login = $('#login');
+                   
+                    side_nav.fn = {};
+                   /* side_nav.$nav_checknetwork.click(function(){
+                        myPhoneGapApi.utils.checkConnection();
+                    });*/
+                    side_nav.$nav_workorder.click(function(){
+                        page_workorder.fn.callWorkOrder();
+                        
+                    });
+               		 side_nav.$nav_scanner.click(function(){
+                         
+                         	 sina.barcodeScanner.scan(function(result) {
+                              	var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
+                             	var param = 'barcode='+result.text+'&format='+result.format;
+                             	$.ui.showMask('请稍后');
+                                 
+                            }, function(error) {
+                                alert("Scanning failed: " + error);
+                            });
+                        
+                      	
+                    });
+                    side_nav.$nav_resourceQuery.click(function(){
+                        page_resource.fn.callResource();
+                    });
+                    side_nav.$login.click(function(){
+
+                        $.ui.loadContent("#main",false,false,"slide");
+                        
+                    });
+                    side_nav.$nav_downLoadDB.click(function(){
+                       utils.downloadDB();
+                    });
+                    side_nav.$nav_offLine.click(function(){
+                       myPhoneGapApi.utils.setNetWork(false);
+                    });
+                    side_nav.$nav_onLine.click(function(){
+                      myPhoneGapApi.utils.setNetWork(true);
+                    });
+                   
+            </script>
+            <!--  -------------- end 侧边栏 --------------  -->
+        </div>
+    </body>
+        <script type="text/javascript" charset="utf-8">
+                $.ui.autoLaunch=false;
+                $.ui.useOSThemes=false;
+                $.ui.blockPageScroll();
+
+                $.ui.ready(function(){
+                    //if($.ui.useOSThemes&&!$.os.ios&&$("#afui").get(0).className!=="ios")
+                    //$("#afui").removeClass("ios");//去除ios样式
+
+                    $('#page_resource').click(function(){
+                        $.ui.loadContent("#resource_manager",false,false,"slide");
+                    });
+                    //扫描一维码
+                    $('#scanner').click(function(){
+                       
+                        scanner.utils.myScanner();
+                    }); 
+                });
+               	var myUtils = {};
+                    myUtils.settings = {};
+                    myUtils.settings.noCompanyStatus = '无';
+                    myUtils.settings.official = {
+                          '0' : '<span style="color:#A2CD5A;font-weight:bold">空闲</span>', 
+                          '1' : '<span style="color:#FF3030;font-weight:bold">占用</span>', 
+                          '2' : '<span style="color:#FFC125;font-weight:bold">预占用</span>' 
+                    };
+                    myUtils.getCompany = function (val) {
+                        if (!val) {
+                            val = myUtils.settings.noCompanyStatus;
+                        }
+                        return '<span id="res_company" style="font-weight:bold">'+val+'</span>';
+                    };
+                    myUtils.getOfficial = function (val) {
+                        return myUtils.settings.official[val];
+                    }; 
+        		
+                </script>
+
+</html>
