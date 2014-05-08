@@ -404,15 +404,16 @@
                             <li> 
                                 <label for="odf2_validata" style="width:20%;" class="" >ODF2端口：</label>
                                
-                                <div>
-                                    <a class="button red" id="odf2_validata" style="margin-left:20%;">点击验证条形码</a>
+                                <div class="input_element from_element">
+                                    <a href="javascript:void(0);" class="button red" id="odf2_validata" style="margin-left:20%;">点击验证条形码</a>
                                 </div>
+
                             </li>
                          
                             <li>
                                 <label for="ter_validate" style="width:20%;" class="" >客户皮线光纤端口：</label>
                                  <div>
-                                  <a class="button red" id="ter_validate" style="margin-left:20%;">点击验证条形码</a>
+                                  <a href="javascript:void(0);" class="button red" id="ter_validate" style="margin-left:20%;">点击验证条形码</a>
                                 </div>
                             </li>
                            
@@ -479,6 +480,9 @@
 
                                     workorder_info.$odf2_validata = $('#odf2_validata');
                                     workorder_info.$ter_validate = $('#ter_validate');
+
+                                    workorder_info.$btn_login_2 = $('#btn_login_2');
+                                   
                         
 									workorder_info.$odf2_id = $('#odf2_id');
                                     workorder_info.$ter_id = $('#ter_id');
@@ -499,20 +503,20 @@
                                         '700' :'已取消工单',
                                         '999999' : '异常工单'
                                     };
-
+                               
                                 var $doc = $doc || $(document);
                                 $doc.delegate("[name='btn_endOrder']","click",function(){
                                     var $id = workorder_info.$msg_list.find('#msg_id').html();
                                     var $version = workorder_info.$msg_list.find('#msg_version').html();
                                     workorder_info.fn.callEndWorkOrder($id,$version);
                                 });
-                             	workorder_info.$odf2_validata.click(function(){
+                             	$doc.delegate('#odf2_validata','click',function(){
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
                                     workorder_info.fn.scannerbarcode(workorder_info.$odf2_id.html(),'1');
                                 });
-                                workorder_info.$ter_validate.click(function(){
+                                $doc.delegate('#ter_validate','click',function(){
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
