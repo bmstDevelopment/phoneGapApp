@@ -116,10 +116,11 @@
                             var loginUrl = utils.data.mainUrl + 'Login/loginIn';
                             var param = 'username='+page_main.$username.val()+'&password='+page_main.$password.val();
                             var loging_success = 'success';
+                            dbDataBase.myDeviceReadyListenerOnLine();//加载数据库
                             $.ui.showMask('登录中');
                             if (myPhoneGapApi.utils.getConnection()) {
                                 utils.wsJsonPUUID(loginUrl,param,function(result){
-
+                                    
                                     $.ui.hideMask();
                                     if (result.state == loging_success) {//登陆成功
                                         dbDataBase.setUUID(result.message);
@@ -136,7 +137,6 @@
                                 page_resource.fn.callResource();
                                 $.ui.hideMask();
                             }
-                            dbDataBase.myDeviceReadyListenerOnLine();//加载数据库
                         });
                         page_main.utils = {};
                         page_main.utils.loginHandle = function () {
@@ -757,6 +757,7 @@
                                         BOX : val.vBOX.portName,
                                         TER : val.vTER.portName
                                     };
+                                    console.log(val);
                                     var html = "";
                                         var temp = ""; 
                                         temp = link.$link_temp.html()
@@ -764,13 +765,13 @@
                                         .replace(/\$ter_id/g,val.resTerminalPortsId)
                                         .replace(/\$odf2_id/g,val.resODFPortsId)
                                         .replace(/\$type/g,setVal(mapType[newType]))
-                                        .replace(/\$odf1_address/g,setVal(val.vSPL.address))
+                                        .replace(/\$odf1_address/g,setVal(val.vSPL == null ? null : val.vSPL.address))
                                         .replace(/\$current_portname/g,setVal(mapCurrentPort[newType]))
                                         .replace(/\$current_address/g,setVal(mapCurrent[newType]))
                                         .replace(/\$odf_address/g,setVal(odf_address))
                                         .replace(/\$box_address/g,setVal(box_address))
                                         .replace(/\$odf_portname/g,setVal(val.vODF.portName))
-                                        .replace(/\$box_portname/g,setVal(val.vBOX.portname))
+                                        .replace(/\$box_portname/g,setVal(val.vBOX.portName))
                                         //.replace(/\$insertdate/g,utils.formatDate(val.insertdate,'yyyy-MM-dd'))
                                         .replace(/\$ter_address/g,setVal(val.vTER.address));
                                         
@@ -1506,35 +1507,35 @@
                     });
                	    side_nav.$nav_scanner.click(function(){
                          
-                         cordova.plugins.barcodeScanner.scan(
-			      function (result) {
-			        
+                        /* cordova.plugins.barcodeScanner.scan(
+			                  function (result) {*/
+			             var result = {};
+                             result.text="1000000000405";
+                             result.format = "who";
 	                            var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
 	                            var param = 'barcode='+result.text+"&format="+result.format;
 	                            $.ui.showMask('请稍后');
-	                            utils.wsJsonPUUID(url,param,function(rs){
-	                            
+	                            utils.wsJsonPUUID(url,param,function(result){
 	                                //console.log(result);
-	                                if (rs.state == 'success') {
-	                                    link.fn.getDetailFromBarCode(rs.data);
+	                                if (result.state == 'success') {
+	                                    link.fn.getDetailFromBarCode(result.data);
 	                                } else {
 	                                    //当进行了扫描后
 	                                    manager.utils.callManager();
-	                                    alert(rs.message);
+	                                    alert(result.message);
 	                                    $.ui.hideMask();
 	                                }
 	                               
-	                            },function(error){
+	                            },function(result){
 	                                //当进行了扫描后错误
 	                                manager.utils.callManager();
 	                                $.ui.hideMask();
 	                            });
-	                           
-			      }, 
+			     /* }, 
 			      function (error) {
 			          alert("Scanning failed: " + error);
 			      }
-			 );
+			 );*/
 			                      	
                     });
                     side_nav.$nav_resourceQuery.click(function(){
