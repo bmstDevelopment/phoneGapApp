@@ -506,10 +506,21 @@
                                     var $version = workorder_info.$msg_list.find('#msg_version').html();
                                     workorder_info.fn.callEndWorkOrder($id,$version);
                                 });
-                             	
+                             	workorder_info.$odf2_validata.click(function(){
+                                    //resType : odf2为1
+                                    // 楼道配线箱为2
+                                    // 用户皮线为3
+                                    workorder_info.fn.scannerbarcode(workorder_info.$odf2_id.html(),'1');
+                                });
+                                workorder_info.$ter_validate.click(function(){
+                                    //resType : odf2为1
+                                    // 楼道配线箱为2
+                                    // 用户皮线为3
+                                    workorder_info.fn.scannerbarcode(workorder_info.$ter_id.html(),'3');
+                                });
                                 workorder_info.fn = {};
                                 workorder_info.fn.callEndWorkOrder = function (id,version) {
-                                   
+                                    return workorder_info.fn.validata_barcode();
                                     var url = utils.data.workorderUrl+'equipWorkorder';
                                     var $isError = workorder_info.$isError.val();
                                     var $reason = workorder_info.$reason.val();
@@ -522,7 +533,39 @@
                                         page_workorder.fn.callWorkOrder();
                                     }); 
                                 }
-                                
+                                workorder_info.fn.validata_barcode = function () {
+                                    var odf2_validata = $('#odf2_validata');
+                                    var ter_validate = $('#ter_validate');
+                                    var flag = true;
+                                    if (odf2_validata.hasClass('red') || ter_validate.hasClass('red')) {
+                                        alert('请先验证两个条形码!');
+                                        flag = false;
+                                    }
+                                    return flag;
+                                };
+                                workorder_info.fn.scannerbarcode = function (resId,resType) {
+                                    function match_scanner (result) {
+                                        var url = utils.data.resourceManagerUrl + 'matchBarcode';
+                                        var param = 'barcode='+result.text+"&resId="+resId+"&resType="+resType;
+                                        $.ui.showMask('请稍后');
+                                        utils.wsJsonPUUID(url,param,function(result){
+                                            //console.log(result);
+                                            if (result.state == 'success') {
+                                                alert(result.message);
+                                            } else {
+                                                //扫描错误
+                                                alert(result.message);
+                                            }
+                                            $.ui.hideMask();
+                                        },function(result){
+                                            //当进行了扫描后错误
+                                            alert('处理出错！');
+                                            $.ui.hideMask();
+                                        });
+                                        
+                                    }
+                                    scanner.doScanner(match_scanner);
+                                }
                                 workorder_info.fn.callWorkOrderMsg = function (id,version) {
 
 
@@ -1498,8 +1541,30 @@
                         
                     });
                	    side_nav.$nav_scanner.click(function(){
-                         
-                        scanner.doScanner();
+                        function my_scanner (reuslt) {
+
+                            var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
+                            var param = 'barcode='+result.text+"&format="+result.format;
+                            $.ui.showMask('请稍后');
+                            utils.wsJsonPUUID(url,param,function(result){
+                                //console.log(result);
+                                if (result.state == 'success') {
+                                    link.fn.getDetailFromBarCode(result.data);
+                                } else {
+                                    //当进行了扫描后
+                                    manager.utils.callManager();
+                                    alert(result.message);
+                                    $.ui.hideMask();
+                                }
+                               
+                            },function(result){
+                                //当进行了扫描后错误
+                                manager.utils.callManager();
+                                $.ui.hideMask();
+                            });
+                    
+                        }
+                        scanner.doScanner(my_scanner);
 			                      	
                     });
                     side_nav.$nav_resourceQuery.click(function(){
@@ -1538,7 +1603,29 @@
                     });
                     //扫描一维码
                     $('#scanner').click(function(){
-                       scanner.doScanner();
+                       function my_scanner (reuslt) {
+                            var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
+                            var param = 'barcode='+result.text+"&format="+result.format;
+                            $.ui.showMask('请稍后');
+                            utils.wsJsonPUUID(url,param,function(result){
+                                //console.log(result);
+                                if (result.state == 'success') {
+                                    link.fn.getDetailFromBarCode(result.data);
+                                } else {
+                                    //当进行了扫描后
+                                    manager.utils.callManager();
+                                    alert(result.message);
+                                    $.ui.hideMask();
+                                }
+                               
+                            },function(result){
+                                //当进行了扫描后错误
+                                manager.utils.callManager();
+                                $.ui.hideMask();
+                            });
+                    
+                        }
+                        scanner.doScanner(my_scanner);
                     }); 
                 });
                	var myUtils = {};

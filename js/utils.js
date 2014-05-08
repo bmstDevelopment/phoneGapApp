@@ -635,29 +635,9 @@
             pagination.PStart = '';
             pagination.PTotal = '';
 		var scanner = {};
-            scanner.doScanner = function () {
+            scanner.doScanner = function (func) {
                 cordova.plugins.barcodeScanner.scan(
-                    function (result) {
-                        var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
-                        var param = 'barcode='+result.text+"&format="+result.format;
-                        $.ui.showMask('请稍后');
-                        utils.wsJsonPUUID(url,param,function(result){
-                            //console.log(result);
-                            if (result.state == 'success') {
-                                link.fn.getDetailFromBarCode(result.data);
-                            } else {
-                                //当进行了扫描后
-                                manager.utils.callManager();
-                                alert(result.message);
-                                $.ui.hideMask();
-                            }
-                           
-                        },function(result){
-                            //当进行了扫描后错误
-                            manager.utils.callManager();
-                            $.ui.hideMask();
-                        });
-                    }, 
+                    func(result), 
                     function (error) {
                         alert("Scanning failed: " + error);
                     }
