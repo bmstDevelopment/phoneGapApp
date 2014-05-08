@@ -561,7 +561,7 @@
            
             myPhoneGapApi.data = {};
             //无用
-            myPhoneGapApi.data.debug = true;//是否电脑调试  true表示用电脑调试/电脑上正常连接 false表示用电脑不能用在线查询/手机上线使用
+            myPhoneGapApi.data.debug = false;//是否电脑调试  true表示用电脑调试/电脑上正常连接 false表示用电脑不能用在线查询/手机上线使用
             myPhoneGapApi.data.line = true;//联网查询设置
             myPhoneGapApi.utils = {};
             myPhoneGapApi.utils.checkConnection = function () {
@@ -634,34 +634,4 @@
             pagination.ITotal = '';
             pagination.PStart = '';
             pagination.PTotal = '';
-		var scanner = {};
-              scanner.utils = {};
-              scanner.utils.myScanner = function () {
-                  sina.barcodeScanner.scan(function(reuslt){
-                      			var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
-                                var param = 'barcode='+result.text+"&format="+result.format;
-                                $.ui.showMask('请稍后');
-                                utils.wsJsonPUUID(url,param,function(result){
-                                    //console.log(result);
-                                    if (result.state == 'success') {
-                                        alert(JSON.stringify(link));
-                                        link.fn.getDetailFromBarCode(result.data);
-                                    } else {
-                                        //当进行了扫描后
-                                        manager.utils.callManager();
-                                        alert(result.message);
-                                        $.ui.hideMask();
-                                    }
-                                   
-                                },function(error){
-                                    //当进行了扫描后错误
-                                    manager.utils.callManager();
-                                    alert("error:"+error);
-                                    $.ui.hideMask();
-                                });
-                         
-                  	}, function(error) {
-                        alert("Scanning failed: " + error);
-                    });
-              };
-			
+		
