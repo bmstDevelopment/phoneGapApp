@@ -520,7 +520,7 @@
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
-                                    workorder_info.fn.scannerbarcode(workorder_info.$ter_id.html(),'3',workorder_info.$ter_validate.attr('id'));
+                                    workorder_info.fn.scannerbarcode($('#ter_id').html(),'3',workorder_info.$ter_validate.attr('id'));
                                 });
                                 workorder_info.fn = {};
                                 workorder_info.fn.callEndWorkOrder = function (id,version) {
