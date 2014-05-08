@@ -514,13 +514,13 @@
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
-                                    workorder_info.fn.scannerbarcode(workorder_info.$odf2_id.html(),'1');
+                                    workorder_info.fn.scannerbarcode(workorder_info.$odf2_id.html(),'1',workorder_info.$odf2_validata.attr('id'));
                                 });
                                 $doc.delegate('#ter_validate','click',function(){
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
-                                    workorder_info.fn.scannerbarcode(workorder_info.$ter_id.html(),'3');
+                                    workorder_info.fn.scannerbarcode(workorder_info.$ter_id.html(),'3',workorder_info.$ter_validate.attr('id'));
                                 });
                                 workorder_info.fn = {};
                                 workorder_info.fn.callEndWorkOrder = function (id,version) {
@@ -547,18 +547,23 @@
                                     }
                                     return flag;
                                 };
-                                workorder_info.fn.scannerbarcode = function (resId,resType) {
+                                workorder_info.fn.scannerbarcode = function (resId,resType,id) {
                                     cordova.plugins.barcodeScanner.scan(
                                         function (result) {
+                                            /*var result = {};
+                                            result.text = "10000000000405"*/
+                                             var url = utils.data.resourceManagerUrl + 'matchBarcode';
                                             var param = 'barcode='+result.text+"&resId="+resId+"&resType="+resType;
                                             $.ui.showMask('请稍后');
                                             utils.wsJsonPUUID(url,param,function(result){
                                                 //console.log(result);
                                                 if (result.state == 'success') {
                                                     alert(result.message);
+                                                    $("#"+id).removeClass('red').addClass('green');
                                                 } else {
                                                     //扫描错误
                                                     alert(result.message);
+                                                    $("#"+id).removeClass('green').addClass('red');
                                                 }
                                                 $.ui.hideMask();
                                             },function(result){
@@ -610,7 +615,6 @@
 
                                         ;
                                         listObj.html(temp);
-                                        alert(val.resODFPortsId);
                                         workorder_info.$odf2_id.html(val.resODFPortsId);
                                         workorder_info.$ter_id.html(val.resTerminalPortsId);
                                     }
