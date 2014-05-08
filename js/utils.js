@@ -561,7 +561,7 @@
            
             myPhoneGapApi.data = {};
             //无用
-            myPhoneGapApi.data.debug = true;//是否电脑调试  true表示用电脑调试/电脑上正常连接 false表示用电脑不能用在线查询/手机上线使用
+            myPhoneGapApi.data.debug = false;//是否电脑调试  true表示用电脑调试/电脑上正常连接 false表示用电脑不能用在线查询/手机上线使用
             myPhoneGapApi.data.line = true;//联网查询设置
             myPhoneGapApi.utils = {};
             myPhoneGapApi.utils.checkConnection = function () {
