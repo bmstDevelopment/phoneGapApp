@@ -1499,32 +1499,7 @@
                     });
                	    side_nav.$nav_scanner.click(function(){
                          
-                        cordova.plugins.barcodeScanner.scan(
-			                 function (result) {
-	                            var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
-	                            var param = 'barcode='+result.text+"&format="+result.format;
-	                            $.ui.showMask('请稍后');
-	                            utils.wsJsonPUUID(url,param,function(result){
-	                                //console.log(result);
-	                                if (result.state == 'success') {
-	                                    link.fn.getDetailFromBarCode(result.data);
-	                                } else {
-	                                    //当进行了扫描后
-	                                    manager.utils.callManager();
-	                                    alert(result.message);
-	                                    $.ui.hideMask();
-	                                }
-	                               
-	                            },function(result){
-	                                //当进行了扫描后错误
-	                                manager.utils.callManager();
-	                                $.ui.hideMask();
-	                            });
-            			    }, 
-            			     function (error) {
-            			          alert("Scanning failed: " + error);
-            			     }
-        			    );
+                        scanner.doScanner();
 			                      	
                     });
                     side_nav.$nav_resourceQuery.click(function(){
@@ -1563,32 +1538,7 @@
                     });
                     //扫描一维码
                     $('#scanner').click(function(){
-                       cordova.plugins.barcodeScanner.scan(
-                             function (result) {
-                                var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
-                                var param = 'barcode='+result.text+"&format="+result.format;
-                                $.ui.showMask('请稍后');
-                                utils.wsJsonPUUID(url,param,function(result){
-                                    //console.log(result);
-                                    if (result.state == 'success') {
-                                        link.fn.getDetailFromBarCode(result.data);
-                                    } else {
-                                        //当进行了扫描后
-                                        manager.utils.callManager();
-                                        alert(result.message);
-                                        $.ui.hideMask();
-                                    }
-                                   
-                                },function(result){
-                                    //当进行了扫描后错误
-                                    manager.utils.callManager();
-                                    $.ui.hideMask();
-                                });
-                            }, 
-                             function (error) {
-                                  alert("Scanning failed: " + error);
-                             }
-                        );
+                       scanner.doScanner();
                     }); 
                 });
                	var myUtils = {};
