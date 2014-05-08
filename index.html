@@ -387,7 +387,8 @@
                 <!--  -------------- end 我的工单 --------------  -->
                 <!--  -------------- start 工单信息 --------------  -->
                 <div id="workorder_msg" class="panel appground"  data-nav="nav_mySide" title="工单信息" data-footer="none">
-
+                    <span id="odf2_id" style="display:none;"></span>
+                    <span id="ter_id" style="display:none;"></span>
                     <div id="msg_list">
                        
                     </div>
@@ -397,8 +398,7 @@
                                 <!-- <label for="msg_address" style="width:20%;"></label> -->
                                 <span id="msg_id" style="display:none;">$id</span>
                                 <span id="msg_version" style="display:none;">$version</span>
-                                <span id="odf2_id" style="display:none;">$odf2_id</span>
-                                <span id="ter_id" style="display:none;">$ter_id</span>
+                               
                                 <span id="msg_address" style="width:100%;" class="">地址：$address</span>
                             </li>
                             <li> 
@@ -550,7 +550,6 @@
                                 workorder_info.fn.scannerbarcode = function (resId,resType) {
                                     cordova.plugins.barcodeScanner.scan(
                                         function (result) {
-                                            var url = utils.data.resourceManagerUrl + 'matchBarcode';
                                             var param = 'barcode='+result.text+"&resId="+resId+"&resType="+resType;
                                             $.ui.showMask('请稍后');
                                             utils.wsJsonPUUID(url,param,function(result){
@@ -611,6 +610,9 @@
 
                                         ;
                                         listObj.html(temp);
+                                        alert(val.resODFPortsId);
+                                        workorder_info.$odf2_id.html(val.resODFPortsId);
+                                        workorder_info.$ter_id.html(val.resTerminalPortsId);
                                     }
                                     addItems(data,operator);
                                 };
