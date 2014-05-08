@@ -30,7 +30,7 @@
             }
         </style>
     
-       <phonegap></phonegap>
+       <script type="text/javascript" charset="utf-8" src="barcodescanner.js"></script>
        <!-- appframework 的两个js都修改过 替换请慎重 -->
         <script type="text/javascript" charset="utf-8" src="js/appframework.min.js"></script>
 
@@ -1503,18 +1503,20 @@
                         page_workorder.fn.callWorkOrder();
                         
                     });
-               		 side_nav.$nav_scanner.click(function(){
+               	    side_nav.$nav_scanner.click(function(){
                          
-                         	 sina.barcodeScanner.scan(function(result) {
-                              	var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
-                             	var param = 'barcode='+result.text+'&format='+result.format;
-                             	$.ui.showMask('请稍后');
-                                 
-                            }, function(error) {
-                                alert("Scanning failed: " + error);
-                            });
-                        
-                      	
+                         cordova.plugins.barcodeScanner.scan(
+			      function (result) {
+			          alert("We got a barcode\n" +
+			                "Result: " + result.text + "\n" +
+			                "Format: " + result.format + "\n" +
+			                "Cancelled: " + result.cancelled);
+			      }, 
+			      function (error) {
+			          alert("Scanning failed: " + error);
+			      }
+			 );
+			                      	
                     });
                     side_nav.$nav_resourceQuery.click(function(){
                         page_resource.fn.callResource();
