@@ -1507,11 +1507,8 @@
                     });
                	    side_nav.$nav_scanner.click(function(){
                          
-                        /* cordova.plugins.barcodeScanner.scan(
-			                  function (result) {*/
-			             var result = {};
-                             result.text="1000000000405";
-                             result.format = "who";
+                        cordova.plugins.barcodeScanner.scan(
+			                  function (result) {
 	                            var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
 	                            var param = 'barcode='+result.text+"&format="+result.format;
 	                            $.ui.showMask('请稍后');
@@ -1531,11 +1528,11 @@
 	                                manager.utils.callManager();
 	                                $.ui.hideMask();
 	                            });
-			     /* }, 
-			      function (error) {
-			          alert("Scanning failed: " + error);
-			      }
-			 );*/
+            			    }, 
+            			     function (error) {
+            			          alert("Scanning failed: " + error);
+            			     }
+        			    );
 			                      	
                     });
                     side_nav.$nav_resourceQuery.click(function(){
