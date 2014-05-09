@@ -563,7 +563,7 @@
                                              var url = utils.data.resourceManagerUrl + 'matchBarcode';
                                             var param = 'barcode='+result.text+"&resId="+resId+"&resType="+resType;
                                             $.ui.showMask('请稍后');
-                                            if (result) {
+                                            
                                                 utils.wsJsonPUUID(url,param,function(result){
                                                     //console.log(result);
                                                     if (result.state == 'success') {
@@ -580,7 +580,7 @@
                                                     alert('处理出错！');
                                                     $.ui.hideMask();
                                                 });
-                                            }
+                                            
                                         }, 
                                         function (error) {
                                             alert("Scanning failed: " + error);
