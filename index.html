@@ -410,7 +410,7 @@
                                 <label for="odf2_validata" style="width:20%;" class="" >ODF2端口：</label>
                                
                                 <div class="input_element from_element">
-                                    <a href="javascript:void(0);" class="button red" id="odf2_validata" style="margin-left:20%;">点击验证条形码</a>
+                                    <a href="javascript:void(0);" class="button red" id="odf2_validata" name="odf2_validata" style="margin-left:20%;">点击验证条形码</a>
                                 </div>
 
                             </li>
@@ -418,7 +418,7 @@
                             <li>
                                 <label for="ter_validate" style="width:20%;" class="" >客户皮线光纤端口：</label>
                                  <div>
-                                  <a href="javascript:void(0);" class="button red" id="ter_validate" style="margin-left:20%;">点击验证条形码</a>
+                                  <a href="javascript:void(0);" class="button red" id="ter_validate" name="odf2_validata"  style="margin-left:20%;">点击验证条形码</a>
                                 </div>
                             </li>
                            
@@ -461,14 +461,14 @@
                             </li>
                             <li>
                                 <label for="isError" style="width:20%;" class="" >是否出现异常：</label>
-                                <select id="isError"  style="widht:50%;height:20%;" >
+                                <select id="isError" name="isError" style="widht:50%;height:20%;" >
                                      <option value="pass">是</option>
                                      <option value="reject">否</option>
                                 </select>
                             </li>
                             <li>
                                 <label for="reason" style="width:20%;" class="" >填写异常原因：</label>
-                                <textarea id="reason" style="widht:50%;height:40%;" class=""></textarea>
+                                <textarea id="reason" name="reason" style="widht:50%;height:40%;" class=""></textarea>
                             </li>
                             <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
                                 <a id="btn_endOrder" name="btn_endOrder" class="button" href="javascript:void(0);" style="width:100%;height:45px;background-color:#0088D1;color:white;font-size:20px;">结单</a>
@@ -515,25 +515,27 @@
                                     var $version = workorder_info.$msg_list.find('#msg_version').html();
                                     workorder_info.fn.callEndWorkOrder($id,$version);
                                 });
-                             	$doc.delegate('#odf2_validata','click',function(){
+                             	$doc.delegate("#odf2_validata","click",function(){
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
                                     workorder_info.fn.scannerbarcode(workorder_info.$odf2_id.html(),'1',workorder_info.$odf2_validata.attr('id'));
                                 });
-                                $doc.delegate('#ter_validate','click',function(){
+                                $doc.delegate("#ter_validate","click",function(){
                                     //resType : odf2为1
                                     // 楼道配线箱为2
                                     // 用户皮线为3
                                     workorder_info.fn.scannerbarcode($('#ter_id').html(),'3',workorder_info.$ter_validate.attr('id'));
                                 });
+                                
                                 workorder_info.fn = {};
                                 workorder_info.fn.callEndWorkOrder = function (id,version) {
                                     //return workorder_info.fn.validata_barcode();
                                     if (workorder_info.fn.validata_barcode()) {
                                         var url = utils.data.workorderUrl+'equipWorkorder';
-                                        var $isError = workorder_info.$isError.val();
-                                        var $reason = workorder_info.$reason.val();
+                                        var $isError = $('#msg_list #isError').val();
+                                        var $reason = $('#msg_list #reason').val();
+
                                         var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason;
                                         
                                         $.ui.showMask('请稍后');
@@ -549,10 +551,10 @@
                                     var odf2_validata = $('#odf2_validata');
                                     var ter_validate = $('#ter_validate');
                                     var flag = true;
-                                    if (odf2_validata.hasClass('red') || ter_validate.hasClass('red')) {
+                                    /*if (odf2_validata.hasClass('red') || ter_validate.hasClass('red')) {
                                         alert('请先验证两个条形码!');
                                         flag = false;
-                                    }
+                                    }*/
                                     return flag;
                                 };
                                 workorder_info.fn.scannerbarcode = function (resId,resType,id) {
