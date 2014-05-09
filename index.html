@@ -548,8 +548,8 @@
                                     
                                 }
                                 workorder_info.fn.validata_barcode = function () {
-                                    var odf2_validata = $('#odf2_validata');
-                                    var ter_validate = $('#ter_validate');
+                                    var odf2_validata = $('#msg_list #odf2_validata');
+                                    var ter_validate = $('#msg_list #ter_validate');
                                     var flag = true;
                                     if (odf2_validata.hasClass('red') || ter_validate.hasClass('red')) {
                                         alert('请先验证两个条形码!');
