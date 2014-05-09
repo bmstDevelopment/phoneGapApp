@@ -560,22 +560,24 @@
                                              var url = utils.data.resourceManagerUrl + 'matchBarcode';
                                             var param = 'barcode='+result.text+"&resId="+resId+"&resType="+resType;
                                             $.ui.showMask('请稍后');
-                                            utils.wsJsonPUUID(url,param,function(result){
-                                                //console.log(result);
-                                                if (result.state == 'success') {
-                                                    alert(result.message);
-                                                    $("#"+id).removeClass('red').addClass('green');
-                                                } else {
-                                                    //扫描错误
-                                                    alert(result.message);
-                                                    $("#"+id).removeClass('green').addClass('red');
-                                                }
-                                                $.ui.hideMask();
-                                            },function(result){
-                                                //当进行了扫描后错误
-                                                alert('处理出错！');
-                                                $.ui.hideMask();
-                                            });
+                                            if (result) {
+                                                utils.wsJsonPUUID(url,param,function(result){
+                                                    //console.log(result);
+                                                    if (result.state == 'success') {
+                                                        alert(result.message);
+                                                        $("#"+id).removeClass('red').addClass('green');
+                                                    } else {
+                                                        //扫描错误
+                                                        alert(result.message);
+                                                        $("#"+id).removeClass('green').addClass('red');
+                                                    }
+                                                    $.ui.hideMask();
+                                                },function(result){
+                                                    //当进行了扫描后错误
+                                                    alert('处理出错！');
+                                                    $.ui.hideMask();
+                                                });
+                                            }
                                         }, 
                                         function (error) {
                                             alert("Scanning failed: " + error);
