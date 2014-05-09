@@ -529,27 +529,30 @@
                                 });
                                 workorder_info.fn = {};
                                 workorder_info.fn.callEndWorkOrder = function (id,version) {
-                                    return workorder_info.fn.validata_barcode();
-                                    var url = utils.data.workorderUrl+'equipWorkorder';
-                                    var $isError = workorder_info.$isError.val();
-                                    var $reason = workorder_info.$reason.val();
-                                    var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason;
+                                    //return workorder_info.fn.validata_barcode();
+                                    if (workorder_info.fn.validata_barcode()) {
+                                        var url = utils.data.workorderUrl+'equipWorkorder';
+                                        var $isError = workorder_info.$isError.val();
+                                        var $reason = workorder_info.$reason.val();
+                                        var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason;
+                                        
+                                        $.ui.showMask('请稍后');
+                                        utils.wsJsonPUUID(url,param,function(result){
+                                            $.ui.hideMask();
+                                            alert(result.message);
+                                            page_workorder.fn.callWorkOrder();
+                                        }); 
+                                    }
                                     
-                                    $.ui.showMask('请稍后');
-                                    utils.wsJsonPUUID(url,param,function(result){
-                                        $.ui.hideMask();
-                                        alert(result.message);
-                                        page_workorder.fn.callWorkOrder();
-                                    }); 
                                 }
                                 workorder_info.fn.validata_barcode = function () {
                                     var odf2_validata = $('#odf2_validata');
                                     var ter_validate = $('#ter_validate');
                                     var flag = true;
-                                    if (odf2_validata.hasClass('red') || ter_validate.hasClass('red')) {
+                                    /*if (odf2_validata.hasClass('red') || ter_validate.hasClass('red')) {
                                         alert('请先验证两个条形码!');
                                         flag = false;
-                                    }
+                                    }*/
                                     return flag;
                                 };
                                 workorder_info.fn.scannerbarcode = function (resId,resType,id) {
