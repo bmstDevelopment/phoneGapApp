@@ -475,7 +475,7 @@
                                 <label for="reason" style="width:20%;" class="" >填写异常原因：</label>
                                 <textarea id="reason" name="reason" style="widht:50%;height:40%;" class=""></textarea>
                             </li>
-                            <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
+                            <div class="input_element from_element" name="endOrderDiv" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;display:none;">
                                 <a id="btn_endOrder" name="btn_endOrder" class="button" href="javascript:void(0);" style="width:100%;height:45px;background-color:#0088D1;color:white;font-size:20px;">结单</a>
                             </div>
                         </ul>
@@ -639,6 +639,12 @@
 
                                         ;
                                         listObj.html(temp);
+                                        var endOrderDiv = $('#msg_list [name=endOrderDiv]');
+                                        if (val.status == '401') {
+                                           endOrderDiv.show();
+                                        } else {
+                                           endOrderDiv.hide();
+                                        }
                                         workorder_info.$odf2_id.html(val.resODFPortsId);
                                         workorder_info.$ter_id.html(val.resTerminalPortsId);
                                     }
@@ -749,6 +755,8 @@
                         </div>
                      </div>
                     
+
+
                     <hr/>
                     <!-- <div class="input_element from_element" style="width:100%;overflow:hidden;padding:2% 10% 2% 10%;">
                         <a id="btn_alter_link_msg" class="button" style="width:100%;height:45px;background-color:#0088D1;color:white;font-size:20px;" href="javascript:void(0);">修改</a>
