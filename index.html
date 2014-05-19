@@ -406,6 +406,7 @@
                                
                                 <span id="msg_address" style="width:100%;" class="">地址：$address</span>
                             </li>
+                            
                             <li> 
                                 <label for="odf2_validata" style="width:20%;" class="" >ODF2端口：</label>
                                
@@ -458,6 +459,10 @@
                             <li>
                                 <!-- <label for="operators" style="width:20%;" class="" >来源:</label> -->
                                 <span id="operators" style="width:65%;" >来源：$operators</span>
+                            </li>
+                            <li>
+                                <label for="isError" style="width:20%;" class="" >分光器：</label>
+                                <input type="text" id="splitter" placeholder="请填写分光器信息" value="$splitter"/>
                             </li>
                             <li>
                                 <label for="isError" style="width:20%;" class="" >是否出现异常：</label>
@@ -533,11 +538,12 @@
                                     //return workorder_info.fn.validata_barcode();
                                     var $isError = $('#msg_list #isError').val();
                                     var $reason = $('#msg_list #reason').val();
+                                    var $splitter = $('#msg_list #splitter').val();
                                     //如果发生异常,如条形码对不上等， 可以在是否异常选择是  后直接提交
                                     if ($isError == 'reject' || workorder_info.fn.validata_barcode()) {
                                         var url = utils.data.workorderUrl+'equipWorkorder';
 
-                                        var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason;
+                                        var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason+"&splitter="+$splitter;
                                         //如果有异常一定要填写
                                         if ($isError == 'reject' && $reason == '') {
                                             alert('请填写异常原因。');
@@ -621,6 +627,7 @@
                                         .replace(/\$id/g,val.id)
                                         .replace(/\$version/g,val.version)
                                         .replace(/\$address/g,val.addressLevel4+''+val.addressLevel6+''+val.addressLevel7)
+                                        .replace(/\$splitter/g,val.resSplitter)
                                         .replace(/\$contactsName/g,val.contactsName)
                                         .replace(/\$contactPhone/g,val.contactPhone)
                                         .replace(/\$applicationDate/g,utils.formatDate(val.applicationDate,'yyyy-MM-dd'))
