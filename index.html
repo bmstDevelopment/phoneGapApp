@@ -462,8 +462,8 @@
                             <li>
                                 <label for="isError" style="width:20%;" class="" >是否出现异常：</label>
                                 <select id="isError" name="isError" style="widht:50%;height:20%;" >
-                                     <option value="pass">是</option>
-                                     <option value="reject">否</option>
+                                     <option value="pass">否</option>
+                                     <option value="reject">是</option>
                                 </select>
                             </li>
                             <li>
@@ -531,19 +531,24 @@
                                 workorder_info.fn = {};
                                 workorder_info.fn.callEndWorkOrder = function (id,version) {
                                     //return workorder_info.fn.validata_barcode();
-                                    if (workorder_info.fn.validata_barcode()) {
+                                    var $isError = $('#msg_list #isError').val();
+                                    var $reason = $('#msg_list #reason').val();
+                                    //如果发生异常,如条形码对不上等， 可以在是否异常选择是  后直接提交
+                                    if ($isError == 'reject' || workorder_info.fn.validata_barcode()) {
                                         var url = utils.data.workorderUrl+'equipWorkorder';
-                                        var $isError = $('#msg_list #isError').val();
-                                        var $reason = $('#msg_list #reason').val();
 
                                         var param = 'workorderId='+id+'&workorderVersion='+version+"&action="+$isError+"&exceptionInfo="+$reason;
-                                        
-                                        $.ui.showMask('请稍后');
-                                        utils.wsJsonPUUID(url,param,function(result){
-                                            $.ui.hideMask();
-                                            alert(result.message);
-                                            page_workorder.fn.callWorkOrder();
-                                        }); 
+                                        //如果有异常一定要填写
+                                        if ($isError == 'reject' && $reason == '') {
+                                            alert('请填写异常原因。');
+                                        } else {
+                                            $.ui.showMask('请稍后');
+                                            utils.wsJsonPUUID(url,param,function(result){
+                                                $.ui.hideMask();
+                                                alert(result.message);
+                                                page_workorder.fn.callWorkOrder();
+                                            }); 
+                                        }
                                     }
                                     
                                 }
