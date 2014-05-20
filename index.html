@@ -539,7 +539,7 @@
                                     var $isError = $('#msg_list #isError').val();
                                     var $reason = $('#msg_list #reason').val();
                                     var $splitter = $('#msg_list #splitter').val();
-                                    //如果发生异常,如条形码对不上等， 可以在是否异常选择是  后直接提交
+                                    //如果发生异常,如条形码对不上等， 可以在是否异常选择'是'  后直接提交
                                     if ($isError == 'reject' || workorder_info.fn.validata_barcode()) {
                                         var url = utils.data.workorderUrl+'equipWorkorder';
 
