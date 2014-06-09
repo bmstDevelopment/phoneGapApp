@@ -190,6 +190,8 @@
                                 <br/>
                                 <span class="">状态：$word</span>
                                 <br/>
+                                <span class="">类型：$typeWork</span>
+                                <br/>
                                 <span class="">联系人名称：$contactsName</span>
                                 <br/>
                                 <span class="">申请日期：$applicationDate</span>
@@ -318,6 +320,10 @@
                                         '700' :'已取消工单',
                                         '999999' : '异常工单'
                                     }
+                                    var mapType = {
+                                        '1' : '开户',
+                                        '0' : '销户'
+                                    }
                                     function addItems(val, _operator) {
                                         var html = "";
                                         $.each(val.items,function(i,item){
@@ -327,6 +333,7 @@
                                                 .replace(/\$FullAddress/g,item.address)
                                                 .replace(/\$version/g,item.version)
                                                 .replace(/\$status/g,item.status)
+                                                .replace(/\$typeWork/g,mapType[item.type])
                                                 .replace(/\$addressLevel4/g,item.addressLevel4)
                                                 .replace(/\$applicationDate/g,utils.formatDate(item.applicationDate,'yyyy-MM-dd'))
                                                 .replace(/\$contactsName/g,item.contactsName)
@@ -406,7 +413,12 @@
                                
                                 <span id="msg_address" style="width:100%;" class="">地址：$address</span>
                             </li>
-                            
+                            <li>
+                                <!-- <label for="msg_address" style="width:20%;"></label> -->
+                                <span id="msg_version" style="display:none;">$version</span>
+                               
+                                <span id="msg_address" style="width:100%;" class="">地址：$address</span>
+                            </li>                               
                             <li> 
                                 <label for="odf2_validata" style="width:20%;" class="" >ODF2端口：</label>
                                
@@ -692,6 +704,9 @@
                                     <br/>
                                     <span id="scanner_address" class="spanPadding">地址：$current_address</span>
                                     <span id="scanner_portname" class="spanPadding">端口名称：$current_portname</span>
+
+
+
                                 </div>
                             </form>
                         </div>
@@ -1576,7 +1591,7 @@
                     side_nav.$nav_offLine = $('#nav_offLine');
                     side_nav.$nav_onLine = $('#nav_onLine');
                     side_nav.$login = $('#login');
-                   
+                    
                     side_nav.fn = {};
                    /* side_nav.$nav_checknetwork.click(function(){
                         myPhoneGapApi.utils.checkConnection();
@@ -1645,6 +1660,6 @@
                         return myUtils.settings.official[val];
                     }; 
         		
-                </script>
+        </script>
 
 </html>

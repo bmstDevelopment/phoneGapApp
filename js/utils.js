@@ -641,6 +641,7 @@
                         var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
                         var param = 'barcode='+result.text+"&format="+result.format;
                         $.ui.showMask('请稍后');
+                        alert(result.text+"一维码");
                         utils.wsJsonPUUID(url,param,function(result){
                             //console.log(result);
                             if (result.state == 'success') {
@@ -663,3 +664,4 @@
                     }
                 );
             }
+            
