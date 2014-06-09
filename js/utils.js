@@ -29,7 +29,7 @@
                         //pageNum=? 填写在param里
                         data : "_type=json&model="+model+"&"+params,
                         jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
-                        //回调函数为jsonp_callback 此处已在 appframework.min.js 中修改 不加上后面的数字 另外在java中返回的字符为 jsonp_callback(json)
+                        //回调函数为jsonp_callback  在java中返回的字符为 jsonp_callback(json)
                         // jsonpCallback:"jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名  
                         success : successFun || function(result){
                             alert('调用成功！');
@@ -641,23 +641,29 @@
                         var url = utils.data.resourceManagerUrl + 'getBarcodeToLink';
                         var param = 'barcode='+result.text+"&format="+result.format;
                         $.ui.showMask('请稍后');
-                        alert(result.text+"一维码");
-                        utils.wsJsonPUUID(url,param,function(result){
-                            //console.log(result);
-                            if (result.state == 'success') {
-                                link.fn.getDetailFromBarCode(result.data);
-                            } else {
-                                //当进行了扫描后
+                        if (result.text) {
+                            utils.wsJsonPUUID(url,param,function(result){
+                                //console.log(result);
+                                if (result.state == 'success') {
+                                    link.fn.getDetailFromBarCode(result.data);
+                                } else {
+                                    //当进行了扫描后
+                                    manager.utils.callManager();
+                                    alert(result.message);
+                                    $.ui.hideMask();
+                                }
+                               
+                            },function(result){
+                                //当进行了扫描后错误
                                 manager.utils.callManager();
                                 alert(result.message);
                                 $.ui.hideMask();
-                            }
-                           
-                        },function(result){
-                            //当进行了扫描后错误
-                            manager.utils.callManager();
-                            $.ui.hideMask();
-                        });
+                            });
+                        }
+                        else {
+                            alert("请重新扫描！");
+                            return false;
+                        }
                     }, 
                     function (error) {
                         alert("Scanning failed: " + error);
