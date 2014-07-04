@@ -9,7 +9,7 @@
         //跨域调用只能写域名或id
             //本地测试使用机器名，手机跨域测试不能使用机器名
             utils.data = {};
-            utils.data.mainUrl = 'http://192.168.1.120:8080/ips_v4/webservice/rest/';
+            utils.data.mainUrl = 'http://221.179.31.146:8080/ips_v4/webservice/rest/';
             utils.data.resourceManagerUrl = utils.data.mainUrl + 'RESTResrouceService/';
             utils.data.workorderUrl = utils.data.mainUrl + 'RESTWorkOrder/';
 
